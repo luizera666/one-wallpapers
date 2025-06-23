@@ -26,38 +26,19 @@
 }
 
 .logo {
-  color: white;
-  font-weight: bold;
-  font-size: 7cqw;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-
-  &:before {
-    position: absolute;
-    content: "CSS";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    color: rgba(0, 0, 0, 0.4);
-    z-index: -1;
-  }
-
-  &:after {
-    position: absolute;
-    content: "CSS";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    color: white;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  
+  img {
+    width: 100%;
+    max-width: 500px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
     transform-style: preserve-3d;
     transition: all .2s linear;
     transform: perspective(100px)
