@@ -1,0 +1,18 @@
+{
+  "name": "holo-card-css-animation",
+  "version": "1.0.0",
+  "description": "Holographic card animation with CSS",
+  "scripts": {
+    "build": "npm run build:pug && npm run build:scss",
+    "build:pug": "pug src/index.pug -o dist",
+    "build:scss": "sass src/style.scss dist/style.css",
+    "watch": "npm run watch:pug & npm run watch:scss",
+    "watch:pug": "pug src/index.pug -o dist --watch",
+    "watch:scss": "sass src/style.scss dist/style.css --watch",
+    "dev": "npm run build && npm run watch"
+  },
+  "devDependencies": {
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.69.0"
+  }
+} 

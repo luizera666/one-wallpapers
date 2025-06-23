@@ -66,19 +66,16 @@
   right: var(--size);
   bottom: var(--size);
   left: var(--size);
-  background: radial-gradient(ellipse at calc(90% - var(--ratio-x) * 20%) calc(0% - var(--ratio-y) * 20%), rgba(255, 255, 255, 0.7), var(--c1) 1%, rgba(255, 66, 236, 0.76) 20%, transparent), linear-gradient(110deg, #0093ff calc(10% - var(--ratio-x) * 20%), #51d6fd calc(20% - var(--ratio-x) * 20%), #0093ff calc(30% - var(--ratio-x) * 20%), rgba(255, 66, 236, 0.76) calc(60% - var(--ratio-x) * 20%), transparent calc(100% - var(--ratio-x) * 20%), transparent);
+  background: radial-gradient(ellipse at calc(90% - var(--ratio-x) * 20%) calc(0% - var(--ratio-y) * 20%), rgba(255, 255, 255, 0.7), var(--c1) 1%, hsla(306, 100%, 63%, 0.76) 20%, transparent), linear-gradient(110deg, #0093ff calc(10% - var(--ratio-x) * 20%), #51d6fd calc(20% - var(--ratio-x) * 20%), #0093ff calc(30% - var(--ratio-x) * 20%), hsla(306, 100%, 63%, 0.76) calc(60% - var(--ratio-x) * 20%), transparent calc(100% - var(--ratio-x) * 20%), transparent);
   transition: all 0.2s linear, opacity 0.8s ease;
   mix-blend-mode: hard-light;
   opacity: 0.3;
 }
 
 .holo-lines {
-  -webkit-mask-image: url(https://assets.codepen.io/907471/holo-card-lines.png?v5);
-          mask-image: url(https://assets.codepen.io/907471/holo-card-lines.png?v5);
-  -webkit-mask-size: contain;
-          mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
+  mask-image: url(https://assets.codepen.io/907471/holo-card-lines.png?v5);
+  mask-size: contain;
+  mask-repeat: no-repeat;
   content: "";
   position: absolute;
   border-radius: inherit;
@@ -113,7 +110,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(78, 212, 253, 0.41) 0.25rem, transparent 0.25rem, transparent) repeat;
+  background: radial-gradient(ellipse at 50% 50%, hsla(194, 98%, 65%, 0.41) 0.25rem, transparent 0.25rem, transparent) repeat;
   background-size: 1rem 1rem;
   background-position: left top;
   transform: translate(-50%, -50%) rotate(45deg);
@@ -126,7 +123,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(78, 212, 253, 0.41) 0.25rem, transparent 0.25rem, transparent) repeat;
+  background: radial-gradient(ellipse at 50% 50%, hsla(194, 98%, 65%, 0.41) 0.25rem, transparent 0.25rem, transparent) repeat;
   background-size: 1rem 1rem;
   background-position: left top;
   transform: translate(50%, 100%) rotate(45deg);
@@ -158,8 +155,7 @@
   opacity: 1;
 }
 .card.rotate {
-  -webkit-animation: rotate 10s ease-in-out infinite;
-          animation: rotate 10s ease-in-out infinite;
+  animation: rotate 10s ease-in-out infinite;
   --correction: 30%;
 }
 .card.rotate .holo-bg {
@@ -189,29 +185,6 @@ html {
   box-sizing: border-box;
 }
 
-@-webkit-keyframes rotate {
-  from {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
-  }
-  30% {
-    --ratio-x: -1.5;
-    --ratio-y: 0.2;
-  }
-  50% {
-    --ratio-x: .5;
-    --ratio-y: .2;
-  }
-  70% {
-    --ratio-x: -1.5;
-    --ratio-y: -1.2;
-  }
-  to {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
-  }
-}
-
 @keyframes rotate {
   from {
     --ratio-x: 1.2;
@@ -234,3 +207,5 @@ html {
     --ratio-y: 1.2;
   }
 }
+
+/*# sourceMappingURL=style.css.map */
