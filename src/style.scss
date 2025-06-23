@@ -41,7 +41,7 @@
     
     transform-style: preserve-3d;
     transition: all .2s linear;
-    transform: perspective(330px)
+    transform: perspective(1000px)
       translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
       translate(
         calc(0rem + var(--ratio-x) * -1rem),
@@ -53,13 +53,15 @@
 }
 
 .holo-bg {
-  position: absolute;
+  position: fixed;
   border-radius: inherit;
   --size: 0;
-  top: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  left: var(--size);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: radial-gradient(
       ellipse at calc(90% - var(--ratio-x) * 20%)
         calc(0% - var(--ratio-y) * 20%),
@@ -80,6 +82,7 @@
   transition: all 0.2s linear, opacity 0.8s ease;
   mix-blend-mode: hard-light;
   opacity: 0.3;
+  z-index: -1;
 }
 
 .holo-lines {
@@ -88,13 +91,15 @@
   mask-repeat: no-repeat;
   mask-position: center;
   content: "";
-  position: absolute;
+  position: fixed;
   border-radius: inherit;
-  --size: 0.001rem;
-  top: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  left: var(--size);
+  --size: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   background: linear-gradient(
     110deg,
@@ -108,6 +113,7 @@
   );
   transition: all 0.2s linear;
   pointer-events: none;
+  z-index: -1;
 }
 
 /*
@@ -162,24 +168,25 @@
 
 .card {
   containter-type: inline-size;
-  overflow: hidden;
-  width: 50vmin;
-  aspect-ratio: 3.126 / 4;
+  overflow: visible;
+  width: 100vw;
+  height: 100vh;
   color: var(--labs-sys-color-on-surface);
-  border-radius: 4cqw;
+  border-radius: 0;
   position: relative;
+  background: transparent;
 
   --ratio-x: 1;
   --ratio-y: 1;
 
   transform-style: preserve-3d;
   transition: transform 0.2s linear;
-  transform: rotateY(calc(-20deg * var(--ratio-x)))
-    rotateX(calc(20deg * var(--ratio-y)));
+  transform: rotateY(calc(-5deg * var(--ratio-x)))
+    rotateX(calc(5deg * var(--ratio-y)));
   --correction: 100%;
   &:hover {
-    transform: rotateY(calc(-20deg * var(--ratio-x)))
-      rotateX(calc(20deg * var(--ratio-y)));
+    transform: rotateY(calc(-5deg * var(--ratio-x)))
+      rotateX(calc(5deg * var(--ratio-y)));
     --correction: 0%;
     .holo-bg {
       opacity: 0.8;
@@ -191,7 +198,7 @@
   }
 
   &.rotate {
-    animation: rotate 10s ease-in-out infinite;
+    animation: rotate 15s ease-in-out infinite;
     --correction: 30%;
     .holo-bg {
       opacity: 0.8;
@@ -207,8 +214,11 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
   font-family: Inter, "Helvetica Neue", Helvetica, sans-serif;
-  perspective: 30rem;
+  perspective: 100vw;
   position: relative;
   background: radial-gradient(ellipse at 50% 50%, #022e82, #000c33);
   color: var(--c1);
@@ -216,7 +226,10 @@ body {
 }
 
 html {
-  min-height: 40rem;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 * {
@@ -225,27 +238,27 @@ html {
 
 @keyframes rotate {
   from {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
+    --ratio-x: 0.5;
+    --ratio-y: 0.5;
   }
 
   30% {
-    --ratio-x: -1.5;
+    --ratio-x: -0.5;
     --ratio-y: 0.2;
   }
   
   50% {
-    --ratio-x: .5;
-    --ratio-y: .2;
+    --ratio-x: 0.3;
+    --ratio-y: 0.2;
   }
   
   70% {
-    --ratio-x: -1.5;
-    --ratio-y: -1.2;
+    --ratio-x: -0.5;
+    --ratio-y: -0.5;
   }
 
   to {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
+    --ratio-x: 0.5;
+    --ratio-y: 0.5;
   }
 }
