@@ -64,16 +64,16 @@
       ellipse at calc(90% - var(--ratio-x) * 20%)
         calc(0% - var(--ratio-y) * 20%),
       rgba(255, 255, 255, 0.7),
-      var(--c1) 1%,
-      hsl(306deg 100% 63% / 76%) 20%,
+      #022e82 1%,
+      #0046c0 20%,
       transparent
     ),
     linear-gradient(
       110deg,
-      #0093ff calc(10% - var(--ratio-x) * 20%),
-      #51d6fd calc(20% - var(--ratio-x) * 20%),
-      #0093ff calc(30% - var(--ratio-x) * 20%),
-      hsl(306deg 100% 63% / 76%) calc(60% - var(--ratio-x) * 20%),
+      #022e82 calc(10% - var(--ratio-x) * 20%),
+      #0046c0 calc(20% - var(--ratio-x) * 20%),
+      #022e82 calc(30% - var(--ratio-x) * 20%),
+      #001c54 calc(60% - var(--ratio-x) * 20%),
       transparent calc(100% - var(--ratio-x) * 20%),
       transparent
     );
@@ -98,14 +98,13 @@
   pointer-events: none;
   background: linear-gradient(
     110deg,
-    #0093ff calc(10% - var(--ratio-x) * 20% - var(--correction)),
-    #51d6fd calc(20% - var(--ratio-x) * 20% - var(--correction)),
-    #0093ff calc(30% - var(--ratio-x) * 20% - var(--correction)),
-    hsla(192, 83%, calc(77% - 20% * var(--ratio-x)), 1)
-      calc(40% - var(--ratio-x) * 20% - var(--correction)),
+    #022e82 calc(10% - var(--ratio-x) * 20% - var(--correction)),
+    #0046c0 calc(20% - var(--ratio-x) * 20% - var(--correction)),
+    #022e82 calc(30% - var(--ratio-x) * 20% - var(--correction)),
+    #0057e9 calc(40% - var(--ratio-x) * 20% - var(--correction)),
     transparent calc(60% - var(--ratio-x) * 20% - var(--correction)),
-    magenta calc(70% - var(--ratio-x) * 20% - var(--correction)),
-    black calc(80% - var(--ratio-x) * 20% - var(--correction))
+    #001c54 calc(70% - var(--ratio-x) * 20% - var(--correction)),
+    #000c33 calc(80% - var(--ratio-x) * 20% - var(--correction))
   );
   transition: all 0.2s linear;
   pointer-events: none;
@@ -211,7 +210,7 @@ body {
   font-family: Inter, "Helvetica Neue", Helvetica, sans-serif;
   perspective: 30rem;
   position: relative;
-  background: radial-gradient(ellipse at 50% 50%, #151578, black);
+  background: radial-gradient(ellipse at 50% 50%, #022e82, #000c33);
   color: var(--c1);
   overflow: hidden;
 }
