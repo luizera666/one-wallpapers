@@ -38,10 +38,10 @@
   img {
     width: 100%;
     max-width: 500px;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    
     transform-style: preserve-3d;
     transition: all .2s linear;
-    transform: perspective(100px)
+    transform: perspective(330px)
       translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
       translate(
         calc(0rem + var(--ratio-x) * -1rem),
@@ -83,9 +83,9 @@
 }
 
 .holo-lines {
-  mask-image: url(https://assets.codepen.io/907471/holo-card-lines.png?v5);
-  mask-size: contain;
-  mask-repeat: no-repeat;
+  mask-image: url(./fundo.svg);
+  mask-size: 100% 100%;
+  mask-repeat: repeat;
   content: "";
   position: absolute;
   border-radius: inherit;
@@ -110,6 +110,7 @@
   pointer-events: none;
 }
 
+/*
 .circles {
   position: absolute;
   border-radius: inherit;
@@ -119,6 +120,7 @@
   left: var(--size);
   right: var(--size);
   bottom: var(--size);
+
   &:before {
     content: "";
     position: absolute;
@@ -127,17 +129,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
-        ellipse at 50% 50%,
+    background: radial-gradient(ellipse at 50% 50%,
         hsl(194deg 98% 65% / 41%) 0.25rem,
         transparent 0.25rem,
-        transparent
-      )
-      repeat;
+        transparent) repeat;
     background-size: 1rem 1rem;
     background-position: left top;
     transform: translate(-50%, -50%) rotate(45deg);
   }
+
   &:after {
     content: "";
     position: absolute;
@@ -146,20 +146,19 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(
-        ellipse at 50% 50%,
+    background: radial-gradient(ellipse at 50% 50%,
         hsl(194deg 98% 65% / 41%) 0.25rem,
         transparent 0.25rem,
-        transparent
-      )
-      repeat;
+        transparent) repeat;
     background-size: 1rem 1rem;
     background-position: left top;
     transform: translate(50%, 100%) rotate(45deg);
   }
+
   opacity: 0.1;
   transition: all 0.8s ease;
 }
+*/
 
 .card {
   containter-type: inline-size;
