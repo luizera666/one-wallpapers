@@ -84,8 +84,9 @@
 
 .holo-lines {
   mask-image: url(./fundo.svg);
-  mask-size: 100% 100%;
-  mask-repeat: repeat;
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: center;
   content: "";
   position: absolute;
   border-radius: inherit;
