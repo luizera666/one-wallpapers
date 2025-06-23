@@ -35,20 +35,48 @@
   place-items: center;
   z-index: 1;
   
-  img {
-    width: 100%;
-    max-width: 500px;
+  &::before {
+    content: "";
+    display: block;
+    width: 200%; // Render 2x maior
+    max-width: 1600px; // 2x do original
+    height: 0;
+    padding-bottom: 26.3%; // Proporção do SVG (204.65/778.09)
+    
+    background-image: url(./one-amarelo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    // Forçar renderização vetorial de alta qualidade
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
     
     transform-style: preserve-3d;
     transition: all .2s linear;
-    transform: perspective(1000px)
+    transform: perspective(700px)
       translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
       translate(
         calc(0rem + var(--ratio-x) * -1rem),
         calc(0rem + var(--ratio-y) * -1rem)
       )
       rotateY(calc(-10deg * var(--ratio-x)))
-      rotateX(calc(10deg * var(--ratio-y)));
+      rotateX(calc(10deg * var(--ratio-y)))
+      scale(1); // Escalar de volta para compensar o 2x
+    
+    // Otimizações para qualidade vetorial
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
+    
+    // Forçar anti-aliasing e suavização
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    // Propriedades específicas para SVG
+    shape-rendering: geometricPrecision;
+    vector-effect: non-scaling-stroke;
   }
 }
 
@@ -87,8 +115,8 @@
 
 .holo-lines {
   mask-image: url(./fundo.svg);
-  mask-size: cover;
-  mask-repeat: no-repeat;
+  mask-size: 130%;
+  mask-repeat: repeat;
   mask-position: center;
   content: "";
   position: fixed;
@@ -103,15 +131,15 @@
   pointer-events: none;
   background: linear-gradient(
     110deg,
-    #022e82 calc(10% - var(--ratio-x) * 20% - var(--correction)),
-    #0046c0 calc(20% - var(--ratio-x) * 20% - var(--correction)),
-    #022e82 calc(30% - var(--ratio-x) * 20% - var(--correction)),
-    #0057e9 calc(40% - var(--ratio-x) * 20% - var(--correction)),
-    transparent calc(60% - var(--ratio-x) * 20% - var(--correction)),
-    #001c54 calc(70% - var(--ratio-x) * 20% - var(--correction)),
-    #000c33 calc(80% - var(--ratio-x) * 20% - var(--correction))
+    #0046c0 calc(10% - var(--ratio-x) * 60% - var(--correction)),
+    #0046c0 calc(20% - var(--ratio-x) * 60% - var(--correction)),
+    #0046c0 calc(30% - var(--ratio-x) * 60% - var(--correction)),
+    #0057e9 calc(40% - var(--ratio-x) * 60% - var(--correction)),
+    transparent calc(60% - var(--ratio-x) * 60% - var(--correction)),
+    #0046c0 calc(70% - var(--ratio-x) * 60% - var(--correction)),
+    #0046c0 calc(80% - var(--ratio-x) * 60% - var(--correction))
   );
-  transition: all 0.2s linear;
+  transition: all 8s linear;
   pointer-events: none;
   z-index: -1;
 }
@@ -189,7 +217,7 @@
       rotateX(calc(5deg * var(--ratio-y)));
     --correction: 0%;
     .holo-bg {
-      opacity: 0.8;
+      opacity: 2;
     }
 
     .circles {
@@ -198,10 +226,10 @@
   }
 
   &.rotate {
-    animation: rotate 15s ease-in-out infinite;
-    --correction: 30%;
+    animation: rotate 35s ease-in-out infinite;
+    --correction: 80%;
     .holo-bg {
-      opacity: 0.8;
+      opacity: 1;
     }
 
     .circles {
