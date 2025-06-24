@@ -15,6 +15,23 @@ html(lang="en")
       .logo
         img(src="one-amarelo.svg" alt="Logo")
     
+    .controls-panel
+      .control-group
+        label(for="amplitude-x") Amplitude X
+        input#amplitude-x(type="range" min="0.1" max="3" step="0.1" value="1")
+        span.value 1.0
+      .control-group
+        label(for="amplitude-y") Amplitude Y
+        input#amplitude-y(type="range" min="0.1" max="3" step="0.1" value="1")
+        span.value 1.0
+      .control-group
+        label(for="animation-speed") Velocidade da Animação
+        input#animation-speed(type="range" min="1" max="20" step="1" value="10")
+        span.value 10s
+      .control-group
+        label(for="animation-toggle") Pausar/Retomar Animação
+        button#animation-toggle.toggle-btn Pausar
+    
     script(src="https://codepen.io/konstantindenerz/pen/KKxvdPq.js")
     script(src="./script.js")
   
