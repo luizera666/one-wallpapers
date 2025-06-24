@@ -46,7 +46,7 @@
   --labs-sys-color-on-surface: hsl(0, 100%, 0%);
   --labs-sys-color-background: black;
   --labs-sys-radius-surface: 2rem;
-  --c1: #ddb4eb;
+  --c1: #4aa8ff;
   
   // Controles de amplitude
   --perspective-amplitude: 1;
@@ -95,15 +95,15 @@
         calc(0% - var(--ratio-y) * 20%),
       rgba(255, 255, 255, 0.7),
       var(--c1) 1%,
-      hsl(306deg 100% 63% / 76%) 20%,
+      #2a8be0 20%,
       transparent
     ),
     linear-gradient(
       110deg,
-      #0093ff calc(10% - var(--ratio-x) * 20%),
-      #51d6fd calc(20% - var(--ratio-x) * 20%),
-      #0093ff calc(30% - var(--ratio-x) * 20%),
-      hsl(306deg 100% 63% / 76%) calc(60% - var(--ratio-x) * 20%),
+      #022e82 calc(10% - var(--ratio-x) * 20%),
+      #1a6bc4 calc(20% - var(--ratio-x) * 20%),
+      #0a4ba8 calc(30% - var(--ratio-x) * 20%),
+      #4aa8ff calc(60% - var(--ratio-x) * 20%),
       transparent calc(100% - var(--ratio-x) * 20%),
       transparent
     );
@@ -128,14 +128,13 @@
   pointer-events: none;
   background: linear-gradient(
     110deg,
-    #0093ff calc(10% - var(--ratio-x) * 20% - var(--correction)),
-    #51d6fd calc(20% - var(--ratio-x) * 20% - var(--correction)),
-    #0093ff calc(30% - var(--ratio-x) * 20% - var(--correction)),
-    hsla(192, 83%, calc(77% - 20% * var(--ratio-x)), 1)
-      calc(40% - var(--ratio-x) * 20% - var(--correction)),
+    #022e82 calc(10% - var(--ratio-x) * 20% - var(--correction)),
+    #1a6bc4 calc(20% - var(--ratio-x) * 20% - var(--correction)),
+    #0a4ba8 calc(30% - var(--ratio-x) * 20% - var(--correction)),
+    #4aa8ff calc(40% - var(--ratio-x) * 20% - var(--correction)),
     transparent calc(60% - var(--ratio-x) * 20% - var(--correction)),
-    magenta calc(70% - var(--ratio-x) * 20% - var(--correction)),
-    black calc(80% - var(--ratio-x) * 20% - var(--correction))
+    #2a8be0 calc(70% - var(--ratio-x) * 20% - var(--correction)),
+    #011f5a calc(80% - var(--ratio-x) * 20% - var(--correction))
   );
   transition: all 0.2s linear;
   pointer-events: none;
@@ -161,7 +160,7 @@
     right: 0;
     bottom: 0;
     background: radial-gradient(ellipse at 50% 50%,
-        hsl(194deg 98% 65% / 41%) 0.25rem,
+        #4aa8ff 0.25rem,
         transparent 0.25rem,
         transparent) repeat;
     background-size: 1rem 1rem;
@@ -178,7 +177,7 @@
     right: 0;
     bottom: 0;
     background: radial-gradient(ellipse at 50% 50%,
-        hsl(194deg 98% 65% / 41%) 0.25rem,
+        #4aa8ff 0.25rem,
         transparent 0.25rem,
         transparent) repeat;
     background-size: 1rem 1rem;
@@ -241,7 +240,7 @@ body {
   font-family: Inter, "Helvetica Neue", Helvetica, sans-serif;
   perspective: calc(30rem * var(--perspective-amplitude));
   position: relative;
-  background: radial-gradient(ellipse at 50% 50%, #151578, black);
+  background: radial-gradient(ellipse at 50% 50%, #011f5a, #000a1a);
   color: var(--c1);
   overflow: hidden;
 }
@@ -323,7 +322,7 @@ html {
         -webkit-appearance: none;
         width: 18px;
         height: 18px;
-        background: linear-gradient(45deg, #0093ff, #51d6fd);
+        background: linear-gradient(45deg, #022e82, #4aa8ff);
         border-radius: 50%;
         cursor: pointer;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -332,7 +331,7 @@ html {
       &::-moz-range-thumb {
         width: 18px;
         height: 18px;
-        background: linear-gradient(45deg, #0093ff, #51d6fd);
+        background: linear-gradient(45deg, #022e82, #4aa8ff);
         border-radius: 50%;
         cursor: pointer;
         border: none;
@@ -344,13 +343,13 @@ html {
       display: inline-block;
       margin-left: 10px;
       font-size: 12px;
-      color: #0093ff;
+      color: #4aa8ff;
       font-weight: 600;
       min-width: 30px;
     }
     
     .toggle-btn {
-      background: linear-gradient(45deg, #0093ff, #51d6fd);
+      background: linear-gradient(45deg, #022e82, #4aa8ff);
       border: none;
       color: white;
       padding: 8px 16px;
@@ -362,7 +361,7 @@ html {
       
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 147, 255, 0.3);
+        box-shadow: 0 4px 12px rgba(2, 46, 130, 0.3);
       }
       
       &:active {
