@@ -18,7 +18,11 @@
   --labs-sys-color-on-surface: hsl(0, 100%, 0%);
   --labs-sys-color-background: black;
   --labs-sys-radius-surface: 2rem;
-  --c1: #ddb4eb;
+  --c1: #022e82;
+  --brand-light: #1a4ba3;
+  --brand-lighter: #4a7bc8;
+  --brand-dark: #011f5a;
+  --brand-darker: #001233;
 }
 
 .logo {
@@ -66,14 +70,14 @@
   right: var(--size);
   bottom: var(--size);
   left: var(--size);
-  background: radial-gradient(ellipse at calc(90% - var(--ratio-x) * 20%) calc(0% - var(--ratio-y) * 20%), rgba(255, 255, 255, 0.7), var(--c1) 1%, hsla(306, 100%, 63%, 0.76) 20%, transparent), linear-gradient(110deg, #0093ff calc(10% - var(--ratio-x) * 20%), #51d6fd calc(20% - var(--ratio-x) * 20%), #0093ff calc(30% - var(--ratio-x) * 20%), hsla(306, 100%, 63%, 0.76) calc(60% - var(--ratio-x) * 20%), transparent calc(100% - var(--ratio-x) * 20%), transparent);
+  background: radial-gradient(ellipse at calc(90% - var(--ratio-x) * 20%) calc(0% - var(--ratio-y) * 20%), rgba(255, 255, 255, 0.7), var(--c1) 1%, var(--brand-light) 20%, transparent), linear-gradient(110deg, var(--brand-darker) calc(10% - var(--ratio-x) * 20%), var(--brand-dark) calc(20% - var(--ratio-x) * 20%), var(--c1) calc(30% - var(--ratio-x) * 20%), var(--brand-light) calc(60% - var(--ratio-x) * 20%), transparent calc(100% - var(--ratio-x) * 20%), transparent);
   transition: all 0.2s linear, opacity 0.8s ease;
   mix-blend-mode: hard-light;
   opacity: 0.3;
 }
 
 .holo-lines {
-  mask-image: url(https://assets.codepen.io/907471/holo-card-lines.png?v5);
+  mask-image: url(./fundo.svg);
   mask-size: contain;
   mask-repeat: no-repeat;
   content: "";
@@ -85,48 +89,9 @@
   bottom: var(--size);
   left: var(--size);
   pointer-events: none;
-  background: linear-gradient(110deg, #0093ff calc(10% - var(--ratio-x) * 20% - var(--correction)), #51d6fd calc(20% - var(--ratio-x) * 20% - var(--correction)), #0093ff calc(30% - var(--ratio-x) * 20% - var(--correction)), hsla(192, 83%, calc(77% - 20% * var(--ratio-x)), 1) calc(40% - var(--ratio-x) * 20% - var(--correction)), transparent calc(60% - var(--ratio-x) * 20% - var(--correction)), magenta calc(70% - var(--ratio-x) * 20% - var(--correction)), black calc(80% - var(--ratio-x) * 20% - var(--correction)));
+  background: linear-gradient(110deg, var(--brand-darker) calc(10% - var(--ratio-x) * 20% - var(--correction)), var(--brand-dark) calc(20% - var(--ratio-x) * 20% - var(--correction)), var(--c1) calc(30% - var(--ratio-x) * 20% - var(--correction)), var(--brand-light) calc(40% - var(--ratio-x) * 20% - var(--correction)), var(--brand-lighter) calc(50% - var(--ratio-x) * 20% - var(--correction)), transparent calc(60% - var(--ratio-x) * 20% - var(--correction)), var(--brand-dark) calc(70% - var(--ratio-x) * 20% - var(--correction)), var(--brand-darker) calc(80% - var(--ratio-x) * 20% - var(--correction)));
   transition: all 0.2s linear;
   pointer-events: none;
-}
-
-.circles {
-  position: absolute;
-  border-radius: inherit;
-  --size: 0;
-  overflow: hidden;
-  top: var(--size);
-  left: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  opacity: 0.1;
-  transition: all 0.8s ease;
-}
-.circles:before {
-  content: "";
-  position: absolute;
-  aspect-ratio: 1/1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at 50% 50%, hsla(194, 98%, 65%, 0.41) 0.25rem, transparent 0.25rem, transparent) repeat;
-  background-size: 1rem 1rem;
-  background-position: left top;
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-.circles:after {
-  content: "";
-  position: absolute;
-  aspect-ratio: 1/1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at 50% 50%, hsla(194, 98%, 65%, 0.41) 0.25rem, transparent 0.25rem, transparent) repeat;
-  background-size: 1rem 1rem;
-  background-position: left top;
-  transform: translate(50%, 100%) rotate(45deg);
 }
 
 .card {
@@ -151,18 +116,12 @@
 .card:hover .holo-bg {
   opacity: 0.8;
 }
-.card:hover .circles {
-  opacity: 1;
-}
 .card.rotate {
   animation: rotate 10s ease-in-out infinite;
   --correction: 30%;
 }
 .card.rotate .holo-bg {
   opacity: 0.8;
-}
-.card.rotate .circles {
-  opacity: 1;
 }
 
 body {
@@ -172,7 +131,7 @@ body {
   font-family: Inter, "Helvetica Neue", Helvetica, sans-serif;
   perspective: 30rem;
   position: relative;
-  background: radial-gradient(ellipse at 50% 50%, #151578, black);
+  background: radial-gradient(ellipse at 50% 50%, var(--brand-darker), black);
   color: var(--c1);
   overflow: hidden;
 }
