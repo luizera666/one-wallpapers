@@ -37,26 +37,33 @@
 }
 .logo:before {
   position: absolute;
-  content: "CSS";
+  content: "";
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   display: grid;
   place-items: center;
-  color: rgba(0, 0, 0, 0.4);
+  background-image: url(./one-branco.svg);
+  background-size: 60% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
   z-index: -1;
 }
 .logo:after {
   position: absolute;
-  content: "CSS";
+  content: "";
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   display: grid;
   place-items: center;
-  color: white;
+  background-image: url(./one-branco.svg);
+  background-size: 60% auto;
+  background-repeat: no-repeat;
+  background-position: center;
   transform-style: preserve-3d;
   transition: all 0.2s linear;
   transform: perspective(100px) translateZ(calc(0.01rem + 0.5rem * var(--ratio-x))) translate(calc(0rem + var(--ratio-x) * -1rem), calc(0rem + var(--ratio-y) * -1rem)) rotateY(calc(-10deg * var(--ratio-x))) rotateX(calc(10deg * var(--ratio-y)));
@@ -79,7 +86,7 @@
 .holo-lines {
   mask-image: url(./fundo.svg);
   mask-size: contain;
-  mask-repeat: no-repeat;
+  mask-repeat: repeat;
   content: "";
   position: absolute;
   border-radius: inherit;
