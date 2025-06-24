@@ -39,23 +39,6 @@
   bottom: 0;
   left: 0;
 
-  &:before {
-    position: absolute;
-    content: "";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    background-image: url(./one-branco.svg);
-    background-size: 60% auto;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.4;
-    z-index: -1;
-  }
-
   &:after {
     position: absolute;
     content: "";
@@ -146,7 +129,7 @@
   width: 50vmin;
   aspect-ratio: 3.126 / 4;
   color: var(--labs-sys-color-on-surface);
-  border-radius: 4cqw;
+  border-radius: 1cqw;
   position: relative;
 
   --ratio-x: 1;
@@ -197,27 +180,27 @@ html {
 
 @keyframes rotate {
   from {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
+    --ratio-x: 0.6;
+    --ratio-y: 0.6;
   }
 
   30% {
-    --ratio-x: -1.5;
-    --ratio-y: 0.2;
+    --ratio-x: -0.75;
+    --ratio-y: 0.1;
   }
   
   50% {
-    --ratio-x: .5;
-    --ratio-y: .2;
+    --ratio-x: 0.25;
+    --ratio-y: 0.1;
   }
   
   70% {
-    --ratio-x: -1.5;
-    --ratio-y: -1.2;
+    --ratio-x: -0.75;
+    --ratio-y: -0.6;
   }
 
   to {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
+    --ratio-x: 0.6;
+    --ratio-y: 0.6;
   }
 }

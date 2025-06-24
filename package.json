@@ -5,15 +5,17 @@
   "scripts": {
     "build": "npm run build:pug && npm run build:scss && npm run copy:assets",
     "build:pug": "pug src/index.pug -o dist",
-    "build:scss": "sass src/style.scss dist/style.css",
+    "build:scss": "npx sass src/style.scss dist/style.css",
     "copy:assets": "copyfiles -u 1 src/*.svg dist/",
     "watch": "npm run watch:pug & npm run watch:scss & npm run watch:assets",
     "watch:pug": "pug src/index.pug -o dist --watch",
-    "watch:scss": "sass src/style.scss dist/style.css --watch",
+    "watch:scss": "npx sass src/style.scss dist/style.css --watch",
     "watch:assets": "copyfiles -u 1 src/*.svg dist/ --watch",
     "dev": "npm run build && npm run watch",
     "serve": "npx http-server dist -p 3000 -o",
-    "start": "npm run build && npm run watch & npm run serve"
+    "start": "npm run build && npm run watch & npm run serve",
+    "live-preview": "npm run build",
+    "build-and-serve": "npm run build && npm run serve"
   },
   "devDependencies": {
     "pug-cli": "^1.0.0-alpha6",
