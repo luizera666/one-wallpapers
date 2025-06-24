@@ -111,4 +111,51 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Adicionar cursor grab ao card
   card.style.cursor = 'grab';
+  
+  // Color pickers para os degradês (com input de texto e preview)
+  const gradPickers = [
+    { id: 'grad1', css: 'grad1', defaultValue: '#0093ff' },
+    { id: 'grad2', css: 'grad2', defaultValue: '#51d6fd' },
+    { id: 'grad3', css: 'grad3', defaultValue: '#ddb4eb' },
+    { id: 'grad4', css: 'grad4', defaultValue: '#c800ff' },
+    { id: 'grad5', css: 'grad5', defaultValue: '#ff00ff' },
+    { id: 'grad6', css: 'grad6', defaultValue: '#000000' },
+  ];
+  gradPickers.forEach(({ id, css, defaultValue }) => {
+    const colorInput = document.getElementById(id);
+    const textInput = document.getElementById(id + '-text');
+    const preview = colorInput && colorInput.parentElement.querySelector('.color-preview');
+    // Função para atualizar tudo
+    function updateAll(newColor) {
+      updateCSSVariable(css, newColor);
+      if (colorInput) colorInput.value = toHex(newColor) || '#000000';
+      if (textInput) textInput.value = newColor;
+      if (preview) preview.style.background = newColor;
+    }
+    // Função para converter para hex se possível
+    function toHex(color) {
+      const ctx = document.createElement('canvas').getContext('2d');
+      ctx.fillStyle = color;
+      return ctx.fillStyle.match(/^#[0-9a-f]{6}$/i) ? ctx.fillStyle : null;
+    }
+    // Inicializar com valor atual
+    const current = getComputedStyle(document.documentElement).getPropertyValue(`--${css}`).trim() || defaultValue;
+    updateAll(current);
+    // Color picker muda
+    if (colorInput) {
+      colorInput.addEventListener('input', function() {
+        updateAll(this.value);
+      });
+    }
+    // Input de texto muda
+    if (textInput) {
+      textInput.addEventListener('input', function() {
+        updateAll(this.value);
+      });
+      // Permitir colar
+      textInput.addEventListener('paste', function(e) {
+        setTimeout(() => updateAll(this.value), 1);
+      });
+    }
+  });
 }); 

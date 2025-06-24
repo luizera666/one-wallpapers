@@ -41,6 +41,37 @@
   initial-value: 10;
 }
 
+@property --grad1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0093ff;
+}
+@property --grad2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #51d6fd;
+}
+@property --grad3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: var(--c1);
+}
+@property --grad4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(306deg 100% 63% / 76%);
+}
+@property --grad5 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: magenta;
+}
+@property --grad6 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: black;
+}
+
 :root {
   --labs-sys-color-surface: #444;
   --labs-sys-color-on-surface: hsl(0, 100%, 0%);
@@ -53,6 +84,12 @@
   --amplitude-x: 1;
   --amplitude-y: 1;
   --animation-speed: 10;
+  --grad1: #0093ff;
+  --grad2: #51d6fd;
+  --grad3: var(--c1);
+  --grad4: hsl(306deg 100% 63% / 76%);
+  --grad5: magenta;
+  --grad6: black;
 }
 
 .logo {
@@ -94,16 +131,16 @@
       ellipse at calc(90% - var(--ratio-x) * 20%)
         calc(0% - var(--ratio-y) * 20%),
       rgba(255, 255, 255, 0.7),
-      var(--c1) 1%,
-      hsl(306deg 100% 63% / 76%) 20%,
+      var(--grad3) 1%,
+      var(--grad4) 20%,
       transparent
     ),
     linear-gradient(
       110deg,
-      #0093ff calc(10% - var(--ratio-x) * 20%),
-      #51d6fd calc(20% - var(--ratio-x) * 20%),
-      #0093ff calc(30% - var(--ratio-x) * 20%),
-      hsl(306deg 100% 63% / 76%) calc(60% - var(--ratio-x) * 20%),
+      var(--grad1) calc(10% - var(--ratio-x) * 20%),
+      var(--grad2) calc(20% - var(--ratio-x) * 20%),
+      var(--grad1) calc(30% - var(--ratio-x) * 20%),
+      var(--grad4) calc(60% - var(--ratio-x) * 20%),
       transparent calc(100% - var(--ratio-x) * 20%),
       transparent
     );
@@ -128,14 +165,14 @@
   pointer-events: none;
   background: linear-gradient(
     110deg,
-    #0093ff calc(10% - var(--ratio-x) * 20% - var(--correction)),
-    #51d6fd calc(20% - var(--ratio-x) * 20% - var(--correction)),
-    #0093ff calc(30% - var(--ratio-x) * 20% - var(--correction)),
+    var(--grad1) calc(10% - var(--ratio-x) * 20% - var(--correction)),
+    var(--grad2) calc(20% - var(--ratio-x) * 20% - var(--correction)),
+    var(--grad1) calc(30% - var(--ratio-x) * 20% - var(--correction)),
     hsla(192, 83%, calc(77% - 20% * var(--ratio-x)), 1)
       calc(40% - var(--ratio-x) * 20% - var(--correction)),
     transparent calc(60% - var(--ratio-x) * 20% - var(--correction)),
-    magenta calc(70% - var(--ratio-x) * 20% - var(--correction)),
-    black calc(80% - var(--ratio-x) * 20% - var(--correction))
+    var(--grad5) calc(70% - var(--ratio-x) * 20% - var(--correction)),
+    var(--grad6) calc(80% - var(--ratio-x) * 20% - var(--correction))
   );
   transition: all 0.2s linear;
   pointer-events: none;
@@ -369,5 +406,48 @@ html {
         transform: translateY(0);
       }
     }
+  }
+  .color-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  input[type="color"] {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    transition: box-shadow 0.2s;
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0,147,255,0.25);
+    }
+  }
+  input[type="text"] {
+    width: 90px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background: #181828;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+    &:focus {
+      border: 1.5px solid #0093ff;
+    }
+  }
+  .color-preview {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1.5px solid #222;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    margin-left: 2px;
   }
 }

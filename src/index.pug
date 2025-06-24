@@ -29,9 +29,44 @@ html(lang="en")
         input#animation-speed(type="range" min="1" max="20" step="1" value="10")
         span.value 10s
       .control-group
+        label Cor 1 (Azul do topo do degradê)
+        .color-row
+          input#grad1(type="color" value="#0093ff")
+          input#grad1-text(type="text" value="#0093ff" maxlength="32" size="10" placeholder="#0093ff" autocomplete="off")
+          span.color-preview(style="background:#0093ff")
+      .control-group
+        label Cor 2 (Azul claro do degradê)
+        .color-row
+          input#grad2(type="color" value="#51d6fd")
+          input#grad2-text(type="text" value="#51d6fd" maxlength="32" size="10" placeholder="#51d6fd" autocomplete="off")
+          span.color-preview(style="background:#51d6fd")
+      .control-group
+        label Cor 3 (Rosa/Lilás do centro)
+        .color-row
+          input#grad3(type="color" value="#ddb4eb")
+          input#grad3-text(type="text" value="#ddb4eb" maxlength="32" size="10" placeholder="#ddb4eb" autocomplete="off")
+          span.color-preview(style="background:#ddb4eb")
+      .control-group
+        label Cor 4 (Roxo do meio)
+        .color-row
+          input#grad4(type="color" value="#c800ff")
+          input#grad4-text(type="text" value="#c800ff" maxlength="32" size="10" placeholder="#c800ff" autocomplete="off")
+          span.color-preview(style="background:#c800ff")
+      .control-group
+        label Cor 5 (Magenta das linhas)
+        .color-row
+          input#grad5(type="color" value="#ff00ff")
+          input#grad5-text(type="text" value="#ff00ff" maxlength="32" size="10" placeholder="#ff00ff" autocomplete="off")
+          span.color-preview(style="background:#ff00ff")
+      .control-group
+        label Cor 6 (Preto das linhas)
+        .color-row
+          input#grad6(type="color" value="#000000")
+          input#grad6-text(type="text" value="#000000" maxlength="32" size="10" placeholder="#000000" autocomplete="off")
+          span.color-preview(style="background:#000000")
+      .control-group
         label(for="animation-toggle") Pausar/Retomar Animação
         button#animation-toggle.toggle-btn Pausar
     
-    script(src="https://codepen.io/konstantindenerz/pen/KKxvdPq.js")
     script(src="./script.js")
   
