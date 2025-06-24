@@ -60,8 +60,7 @@
         calc(0rem + var(--ratio-x) * -1rem),
         calc(0rem + var(--ratio-y) * -1rem)
       )
-      rotateY(calc(-10deg * var(--ratio-x)))
-      rotateX(calc(10deg * var(--ratio-y)));
+      rotateY(calc(-10deg * var(--ratio-x)));
   }
 }
 
@@ -129,20 +128,18 @@
   width: 50vmin;
   aspect-ratio: 3.126 / 4;
   color: var(--labs-sys-color-on-surface);
-  border-radius: 1cqw;
+  border-radius: 4cqw;
   position: relative;
 
   --ratio-x: 1;
-  --ratio-y: 1;
+  --ratio-y: 0;
 
   transform-style: preserve-3d;
   transition: transform 0.2s linear;
-  transform: rotateY(calc(-20deg * var(--ratio-x)))
-    rotateX(calc(20deg * var(--ratio-y)));
+  transform: rotateY(calc(-20deg * var(--ratio-x)));
   --correction: 100%;
   &:hover {
-    transform: rotateY(calc(-20deg * var(--ratio-x)))
-      rotateX(calc(20deg * var(--ratio-y)));
+    transform: rotateY(calc(-20deg * var(--ratio-x)));
     --correction: 0%;
     .holo-bg {
       opacity: 0.8;
@@ -181,26 +178,26 @@ html {
 @keyframes rotate {
   from {
     --ratio-x: 0.6;
-    --ratio-y: 0.6;
+    --ratio-y: 0;
   }
 
   30% {
     --ratio-x: -0.75;
-    --ratio-y: 0.1;
+    --ratio-y: 0;
   }
   
   50% {
     --ratio-x: 0.25;
-    --ratio-y: 0.1;
+    --ratio-y: 0;
   }
   
   70% {
     --ratio-x: -0.75;
-    --ratio-y: -0.6;
+    --ratio-y: 0;
   }
 
   to {
     --ratio-x: 0.6;
-    --ratio-y: 0.6;
+    --ratio-y: 0;
   }
 }
