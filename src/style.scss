@@ -91,7 +91,7 @@
     );
   transition: all 0.2s linear, opacity 0.8s ease;
   mix-blend-mode: hard-light;
-  opacity: 0.3;
+  opacity: 1;
 }
 
 .holo-lines {
@@ -136,15 +136,12 @@
 
   transform-style: preserve-3d;
   transition: transform 0.2s linear;
-  transform: rotateY(calc(-20deg * var(--ratio-x)));
+  /* transform: rotateY(calc(-20deg * var(--ratio-x))); */
   --correction: 100%;
   
   &.rotate {
     animation: rotate 10s ease-in-out infinite;
     --correction: 10%;
-    .holo-bg {
-      opacity: 1;
-    }
   }
 }
 
