@@ -3,16 +3,35 @@
   "version": "1.0.0",
   "description": "Holographic card animation with CSS",
   "scripts": {
-    "build": "npm run build:pug && npm run build:scss",
+    "build": "npm run build:pug && npm run build:scss && npm run copy:assets",
     "build:pug": "pug src/index.pug -o dist",
-    "build:scss": "sass src/style.scss dist/style.css",
-    "watch": "npm run watch:pug & npm run watch:scss",
-    "watch:pug": "pug src/index.pug -o dist --watch",
-    "watch:scss": "sass src/style.scss dist/style.css --watch",
-    "dev": "npm run build && npm run watch"
+    "build:scss": "npx sass src/style.scss dist/style.css",
+    "copy:assets": "copyfiles -u 1 src/*.svg dist/ && copyfiles -u 1 src/*.js dist/",
+    "dev": "concurrently \"npm run watch:all\" \"npm run serve:live\"",
+    "watch:all": "concurrently \"npm run watch:pug\" \"npm run watch:scss\" \"npm run watch:js\" \"npm run watch:assets\"",
+    "watch:pug": "nodemon --watch src --ext pug --exec \"npm run build:pug\"",
+    "watch:scss": "nodemon --watch src --ext scss --exec \"npm run build:scss\"",
+    "watch:js": "nodemon --watch src --ext js --exec \"npm run copy:js\"",
+    "watch:assets": "nodemon --watch src --ext svg --exec \"npm run copy:svg\"",
+    "copy:js": "copyfiles -u 1 src/*.js dist/",
+    "copy:svg": "copyfiles -u 1 src/*.svg dist/",
+    "serve:live": "browser-sync start --config bs-config.js",
+    "serve": "npx http-server dist -p 3000 -o",
+    "start": "npm run build && npm run dev",
+    "quick": "npm run dev",
+    "live-preview": "npm run build",
+    "build-and-serve": "npm run build && npm run serve"
   },
   "devDependencies": {
+    "browser-sync": "^2.29.3",
+    "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
+    "http-server": "^14.1.1",
+    "nodemon": "^3.1.10",
     "pug-cli": "^1.0.0-alpha6",
     "sass": "^1.69.0"
+  },
+  "dependencies": {
+    "parallax-js": "^3.1.0"
   }
-} 
+}

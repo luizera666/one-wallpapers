@@ -16,223 +16,201 @@
   initial-value: 0;
 }
 
+@property --holo-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --holo-speed {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --glow-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
 
 :root {
   --labs-sys-color-surface: #444;
   --labs-sys-color-on-surface: hsl(0, 100%, 0%);
   --labs-sys-color-background: black;
   --labs-sys-radius-surface: 2rem;
-  --c1: #ddb4eb;
+  --c1: #022e82;
+  --brand-light: #1a4ba3;
+  --brand-lighter: #4a7bc8;
+  --brand-dark: #011f5a;
+  --brand-darker: #001233;
+  --holo-intensity: 1;
+  --holo-speed: 1;
+  --glow-intensity: 1;
 }
 
-.logo {
-  color: white;
-  font-weight: bold;
-  font-size: 7cqw;
+// Estilos para a cena do parallax
+#scene.parallax-scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  perspective-origin: center;    // 🔥 FIX para gaps de parallax
+  transform-origin: center;      // 🔥 FIX para gaps de parallax
+}
+
+// Elementos do parallax
+#scene.parallax-scene > * {
   position: absolute;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;      // 🔥 FIX para gaps de parallax
+}
 
-  &:before {
-    position: absolute;
-    content: "CSS";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    color: rgba(0, 0, 0, 0.4);
-    z-index: -1;
-  }
 
-  &:after {
-    position: absolute;
-    content: "CSS";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    color: white;
-    transform-style: preserve-3d;
-    transition: all .2s linear;
-    transform: perspective(100px)
-      translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
-      translate(
-        calc(0rem + var(--ratio-x) * -1rem),
-        calc(0rem + var(--ratio-y) * -1rem)
-      )
-      rotateY(calc(-10deg * var(--ratio-x)))
-      rotateX(calc(10deg * var(--ratio-y)));
-  }
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  background-size: 50% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(./one-branco.svg);
+  z-index: 2;
+  /* Teste de watch - transformação removida temporariamente */
 }
 
 .holo-bg {
-  position: absolute;
   border-radius: inherit;
   --size: 0;
-  top: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  left: var(--size);
-  background: radial-gradient(
-      ellipse at calc(90% - var(--ratio-x) * 20%)
-        calc(0% - var(--ratio-y) * 20%),
-      rgba(255, 255, 255, 0.7),
-      var(--c1) 1%,
-      hsl(306deg 100% 63% / 76%) 20%,
-      transparent
-    ),
+  position: absolute;
+  width: 300vw;               // 🔥 Tamanho grande para cobertura completa
+  height: 300vh;              // 🔥 Tamanho grande para cobertura completa
+  left: 50%;                  // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  top: 50%;                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  transform-origin: center;   // 🔥 FIX específico para este elemento
+  background: 
     linear-gradient(
       110deg,
-      #0093ff calc(10% - var(--ratio-x) * 20%),
-      #51d6fd calc(20% - var(--ratio-x) * 20%),
-      #0093ff calc(30% - var(--ratio-x) * 20%),
-      hsl(306deg 100% 63% / 76%) calc(60% - var(--ratio-x) * 20%),
-      transparent calc(100% - var(--ratio-x) * 20%),
-      transparent
+      var(--brand-darker) calc(15% - var(--ratio-x) * 8%),     // 🔥 Reduzido ainda mais para compensar
+      var(--brand-dark) calc(25% - var(--ratio-x) * 8%),       // 🔥 Reduzido ainda mais para compensar
+      var(--c1) calc(35% - var(--ratio-x) * 8%),               // 🔥 Reduzido ainda mais para compensar
+      var(--brand-light) calc(65% - var(--ratio-x) * 8%),      // 🔥 Reduzido ainda mais para compensar
+      var(--c1) calc(85% - var(--ratio-x) * 8%),               // 🔥 Reduzido ainda mais para compensar
+      #001b4f
     );
   transition: all 0.2s linear, opacity 0.8s ease;
-  mix-blend-mode: hard-light;
-  opacity: 0.3;
+  mix-blend-mode: screen;
+  opacity: 1;
+  z-index: 0;
+  will-change: transform;     // 🔥 Otimização GPU para movimento suave
 }
 
 .holo-lines {
-  mask-image: url(https://assets.codepen.io/907471/holo-card-lines.png?v5);
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  content: "";
+  // 🔥 UNIFICADO - Todos os estilos em um só bloco, centralizado
   position: absolute;
-  border-radius: inherit;
-  --size: 0.001rem;
-  top: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  left: var(--size);
+                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  width: 200vw;               // 🔥 Tamanho grande para cobertura completa
+  height: 200vh;              // 🔥 Tamanho grande para cobertura completa
+  transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  transform-origin: center;   // 🔥 FIX específico para este elemento
+  z-index: 1;
   pointer-events: none;
+  
+  // Propriedades da máscara e animação
+  mask-image: url(./fundo.svg);
+  mask-size: 70% auto;
+  mask-repeat: repeat;
   background: linear-gradient(
-    110deg,
-    #0093ff calc(10% - var(--ratio-x) * 20% - var(--correction)),
-    #51d6fd calc(20% - var(--ratio-x) * 20% - var(--correction)),
-    #0093ff calc(30% - var(--ratio-x) * 20% - var(--correction)),
-    hsla(192, 83%, calc(77% - 20% * var(--ratio-x)), 1)
-      calc(40% - var(--ratio-x) * 20% - var(--correction)),
-    transparent calc(60% - var(--ratio-x) * 20% - var(--correction)),
-    magenta calc(70% - var(--ratio-x) * 20% - var(--correction)),
-    black calc(80% - var(--ratio-x) * 20% - var(--correction))
+    90deg,
+    rgba(255,255,255,0) 0%,
+    #ffffff calc(45% + (var(--holo-intensity) * 20%)),
+    #ffffff 50%,
+    #ffffff calc(55% - (var(--holo-intensity) * 20%)),
+    rgba(255,255,255,0) 100%
   );
-  transition: all 0.2s linear;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: 
+    animate calc(6s / var(--holo-speed)) linear infinite,
+    glow-pulse 3s ease-in-out infinite;
+  opacity: calc(1 + (var(--holo-intensity) * 0.8));
+  mix-blend-mode: overlay;
+  
+  // 🔥 NOVO: Efeito de brilho (glow) nas linhas holográficas
+  filter: 
+    drop-shadow(0 0 calc(20px * var(--glow-intensity)) var(--brand-lighter))
+    drop-shadow(0 0 calc(40px * var(--glow-intensity)) var(--brand-light))
+    drop-shadow(0 0 calc(60px * var(--glow-intensity)) var(--c1))
+    drop-shadow(0 0 calc(80px * var(--glow-intensity)) var(--brand-light));
+    
+  will-change: transform;     // 🔥 Otimização GPU para movimento suave
+}
+
+@keyframes animate {
+  0% {
+    background-position: -500%;
+  }
+  100% {
+    background-position: 500%;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    --glow-intensity: 1;
+  }
+  50% {
+    --glow-intensity: 1.8;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(110deg, #022e82 0%, #1a4ba3 100%);
+  color: var(--labs-sys-color-on-surface);
+  --ratio-x: 1;
+  --ratio-y: 0;
+  transform-style: preserve-3d;
+  transition: none;
+  --correction: 100%;
+  z-index: 0;
+}
+
+// 🔥 FIX ADICIONAL: Garante que não haja gaps em nenhuma situação
+body::before {
+  content: '';
+  position: fixed;
+  top: -50vh;
+  left: -50vw;
+  width: 200vw;
+  height: 200vh;
+  background: linear-gradient(110deg, #022e82 0%, #1a4ba3 100%);
+  z-index: -1;
   pointer-events: none;
 }
 
-.circles {
-  position: absolute;
-  border-radius: inherit;
-  --size: 0;
-  overflow: hidden;
-  top: var(--size);
-  left: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  &:before {
-    content: "";
-    position: absolute;
-    aspect-ratio: 1/1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        ellipse at 50% 50%,
-        hsl(194deg 98% 65% / 41%) 0.25rem,
-        transparent 0.25rem,
-        transparent
-      )
-      repeat;
-    background-size: 1rem 1rem;
-    background-position: left top;
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  &:after {
-    content: "";
-    position: absolute;
-    aspect-ratio: 1/1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        ellipse at 50% 50%,
-        hsl(194deg 98% 65% / 41%) 0.25rem,
-        transparent 0.25rem,
-        transparent
-      )
-      repeat;
-    background-size: 1rem 1rem;
-    background-position: left top;
-    transform: translate(50%, 100%) rotate(45deg);
-  }
-  opacity: 0.1;
-  transition: all 0.8s ease;
-}
-
-.card {
-  containter-type: inline-size;
-  overflow: hidden;
-  width: 50vmin;
-  aspect-ratio: 3.126 / 4;
-  color: var(--labs-sys-color-on-surface);
-  border-radius: 4cqw;
-  position: relative;
-
-  --ratio-x: 1;
-  --ratio-y: 1;
-
-  transform-style: preserve-3d;
-  transition: transform 0.2s linear;
-  transform: rotateY(calc(-20deg * var(--ratio-x)))
-    rotateX(calc(20deg * var(--ratio-y)));
-  --correction: 100%;
-  &:hover {
-    transform: rotateY(calc(-20deg * var(--ratio-x)))
-      rotateX(calc(20deg * var(--ratio-y)));
-    --correction: 0%;
-    .holo-bg {
-      opacity: 0.8;
-    }
-
-    .circles {
-      opacity: 1;
-    }
-  }
-
-  &.rotate {
-    animation: rotate 10s ease-in-out infinite;
-    --correction: 30%;
-    .holo-bg {
-      opacity: 0.8;
-    }
-
-    .circles {
-      opacity: 1;
-    }
-  }
-}
-
-body {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  font-family: Inter, "Helvetica Neue", Helvetica, sans-serif;
-  perspective: 30rem;
-  position: relative;
-  background: radial-gradient(ellipse at 50% 50%, #151578, black);
-  color: var(--c1);
-  overflow: hidden;
+body.rotate {
+  animation: rotate 10s ease-in-out infinite;
+  --correction: 10%;
 }
 
 html {
@@ -245,27 +223,27 @@ html {
 
 @keyframes rotate {
   from {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
+    --ratio-x: 0.6;
+    --ratio-y: 0;
   }
 
   30% {
-    --ratio-x: -1.5;
-    --ratio-y: 0.2;
+    --ratio-x: -0.75;
+    --ratio-y: 0;
   }
   
   50% {
-    --ratio-x: .5;
-    --ratio-y: .2;
+    --ratio-x: 0.25;
+    --ratio-y: 0;
   }
   
   70% {
-    --ratio-x: -1.5;
-    --ratio-y: -1.2;
+    --ratio-x: -0.75;
+    --ratio-y: 0;
   }
 
   to {
-    --ratio-x: 1.2;
-    --ratio-y: 1.2;
+    --ratio-x: 0.6;
+    --ratio-y: 0;
   }
 }
