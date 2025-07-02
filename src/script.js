@@ -26,18 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		calibrateY: true,
 		invertX: true,
 		invertY: true,
-		limitX: false,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
-		limitY: false,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
-		scalarX: 2,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
-		scalarY: 2,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
-		frictionX: 0.2,             // 🔥 AUMENTADO - Movimento mais suave
-		frictionY: 0.2,             // 🔥 AUMENTADO - Movimento mais suave
+		limitX: 15,                 // 🔥 MUITO SUTIL - Movimento bem restrito e suave
+		limitY: 15,                 // 🔥 MUITO SUTIL - Movimento bem restrito e suave
+		scalarX: 1.5,               // 🔥 SUPER SUTIL - Intensidade bem baixa para sutileza
+		scalarY: 1.5,               // 🔥 SUPER SUTIL - Intensidade bem baixa para sutileza
+		frictionX: 0.06,            // 🔥 ULTRA SUAVE - Movimento bem gradual e elegante
+		frictionY: 0.06,            // 🔥 ULTRA SUAVE - Movimento bem gradual e elegante
 		originX: 0.5,               // Centro é mais seguro para evitar gaps
 		originY: 0.5,               // Centro é mais seguro para evitar gaps
 		precision: 1,               // Menos precisão = melhor performance
 		pointerEvents: false,
 		onReady: function() {
-			console.log("Parallax inicializado com sucesso!");
+			console.log("Parallax inicializado - Modo Ultra Sutil e Suave!");
 		}
 	});
 

@@ -61,19 +61,6 @@
 }
 
 
-.holo-lines {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 200vw;
-  height: 200vh;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
 .logo {
   position: absolute;
   top: 0;
@@ -92,15 +79,15 @@
   /* Teste de watch - transformação removida temporariamente */
 }
 
-
 .holo-bg {
   border-radius: inherit;
   --size: 0;
   position: absolute;
-  width: 400vw;               // 🔥 AINDA MAIOR para eliminar gaps definitivamente
-  height: 400vh;              // 🔥 AINDA MAIOR para eliminar gaps definitivamente  
-  left: -150vw;               // 🔥 Centraliza o elemento extra-extra-grande
-  top: -150vh;                // 🔥 Centraliza o elemento extra-extra-grande
+  width: 300vw;               // 🔥 Tamanho grande para cobertura completa
+  height: 300vh;              // 🔥 Tamanho grande para cobertura completa
+  left: 50%;                  // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  top: 50%;                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
   transform-origin: center;   // 🔥 FIX específico para este elemento
   background: 
     linear-gradient(
@@ -120,19 +107,27 @@
 }
 
 .holo-lines {
-  z-index: 1;
-  mask-image: url(./fundo.svg);
-  mask-size: 70% auto;
-  mask-repeat: repeat;
+  // 🔥 UNIFICADO - Todos os estilos em um só bloco, centralizado
   position: absolute;
-  inset: 0;
+  left: 50%;                  // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  top: 50%;                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  width: 200vw;               // 🔥 Tamanho grande para cobertura completa
+  height: 200vh;              // 🔥 Tamanho grande para cobertura completa
+  transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  transform-origin: center;   // 🔥 FIX específico para este elemento
+  z-index: 1;
   pointer-events: none;
+  
+  // Propriedades da máscara e animação
+  mask-image: url(./fundo.svg);
+  mask-size: 80% auto;
+  mask-repeat: repeat;
   background: linear-gradient(
     90deg,
     rgba(255,255,255,0) 0%,
-    rgb(255, 255, 255) calc(45% + (var(--holo-intensity) * 5%)),
+    #ffffff calc(45% + (var(--holo-intensity) * 20%)),
     #ffffff 50%,
-    rgba(255,255,255,0.8) calc(55% - (var(--holo-intensity) * 5%)),
+    #ffffff calc(55% - (var(--holo-intensity) * 20%)),
     rgba(255,255,255,0) 100%
   );
   background-repeat: no-repeat;
@@ -140,6 +135,7 @@
   animation: animate calc(8s / var(--holo-speed)) linear infinite;
   opacity: calc(0.8 + (var(--holo-intensity) * 0.2));
   mix-blend-mode: overlay;
+  will-change: transform;     // 🔥 Otimização GPU para movimento suave
 }
 
 @keyframes animate {
