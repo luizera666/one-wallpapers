@@ -37,12 +37,22 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Aplica o transform na logo (acumula centralização)
 		logo.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px)`;
 		
+		// Calcula a intensidade do efeito baseado na distância do centro
+		const distance = Math.sqrt(currentX * currentX + currentY * currentY);
+		const maxDistance = Math.sqrt(22 * 22 + 12 * 12); // Valores máximos de targetX e targetY
+		const intensity = 1 + (distance / maxDistance);
+		const speed = 1 + (distance / maxDistance) * 0.5;
+		
 		// Deslocamento sutil do pattern do holo-lines
 		if (holoLines) {
 			const sutilX = currentX * 0.12; // movimento ainda mais sutil
 			const sutilY = currentY * 0.12;
 			holoLines.style.maskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
 			holoLines.style.webkitMaskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
+			
+			// Atualiza as variáveis CSS para o efeito holográfico
+			document.body.style.setProperty('--holo-intensity', intensity.toString());
+			document.body.style.setProperty('--holo-speed', speed.toString());
 		}
 		
 		// Continua animando se ainda há diferença
@@ -58,6 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				const sutilY = currentY * 0.12;
 				holoLines.style.maskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
 				holoLines.style.webkitMaskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
+				
+				// Atualiza as variáveis CSS para o efeito holográfico
+				document.body.style.setProperty('--holo-intensity', intensity.toString());
+				document.body.style.setProperty('--holo-speed', speed.toString());
 			}
 			isAnimating = false;
 		}
@@ -93,6 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log("Mouse saiu!");
 		targetX = 0;
 		targetY = 0;
+		
+		// Reseta as variáveis do efeito holográfico
+		document.body.style.setProperty('--holo-intensity', '1');
+		document.body.style.setProperty('--holo-speed', '1');
 		
 		if (!isAnimating) {
 			isAnimating = true;

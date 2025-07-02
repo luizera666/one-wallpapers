@@ -16,6 +16,17 @@
   initial-value: 0;
 }
 
+@property --holo-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --holo-speed {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
 
 :root {
   --labs-sys-color-surface: #444;
@@ -105,15 +116,15 @@
   background: linear-gradient(
     90deg,
     rgba(255,255,255,0) 0%,
-    rgb(255, 255, 255) 45%,
+    rgb(255, 255, 255) calc(45% + (var(--holo-intensity) * 5%)),
     #ffffff 50%,
-    rgba(255,255,255,0.8) 55%,
+    rgba(255,255,255,0.8) calc(55% - (var(--holo-intensity) * 5%)),
     rgba(255,255,255,0) 100%
   );
   background-repeat: no-repeat;
   background-size: 80%;
-  animation: animate 8s linear infinite;
-  opacity: 1;
+  animation: animate calc(8s / var(--holo-speed)) linear infinite;
+  opacity: calc(0.8 + (var(--holo-intensity) * 0.2));
   mix-blend-mode: overlay;
 }
 
@@ -125,8 +136,6 @@
     background-position: 500%;
   }
 }
-
-
 
 body {
   width: 100vw;
