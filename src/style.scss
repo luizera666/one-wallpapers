@@ -99,28 +99,31 @@
   mask-image: url(./fundo.svg);
   mask-size: contain;
   mask-repeat: repeat;
-  content: "";
   position: absolute;
-  border-radius: inherit;
-  --size: 0.001rem;
-  top: var(--size);
-  right: var(--size);
-  bottom: var(--size);
-  left: var(--size);
+  inset: 0;
   pointer-events: none;
   background: linear-gradient(
-    110deg,
-    var(--brand-darker) calc(10% - var(--ratio-x) * 20% - var(--correction)),
-    var(--brand-dark) calc(20% - var(--ratio-x) * 20% - var(--correction)),
-    var(--c1) calc(30% - var(--ratio-x) * 20% - var(--correction)),
-    var(--brand-light) calc(40% - var(--ratio-x) * 20% - var(--correction)),
-    var(--brand-lighter) calc(50% - var(--ratio-x) * 20% - var(--correction)),
-    transparent calc(60% - var(--ratio-x) * 20% - var(--correction)),
-    var(--brand-dark) calc(70% - var(--ratio-x) * 20% - var(--correction)),
-    var(--brand-darker) calc(80% - var(--ratio-x) * 20% - var(--correction))
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.8) 45%,
+    #fff 50%,
+    rgba(255,255,255,0.8) 55%,
+    rgba(255,255,255,0) 100%
   );
-  transition: all 0.2s linear;
-  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  animation: animate 10s linear infinite;
+  opacity: 1;
+  mix-blend-mode: overlay;
+}
+
+@keyframes animate {
+  0% {
+    background-position: -200%;
+  }
+  100% {
+    background-position: 200%;
+  }
 }
 
 .card {
@@ -149,12 +152,14 @@
 }
 
 body {
-  min-height: 100vh;
-  min-width: 100vw;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
   font-family: Inter, "Helvetica Neue", Helvetica, sans-serif;
-  background: radial-gradient(ellipse at 50% 50%, var(--brand-darker), black);
   color: var(--c1);
   overflow: hidden;
   position: relative;
