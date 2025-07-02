@@ -83,7 +83,7 @@
   background-size: 50% auto;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(./one-branco.svg);
+  background-image: url(./assets/one-branco.svg);
   z-index: 2;
   /* Teste de watch - transformação removida temporariamente */
 }
@@ -127,7 +127,7 @@
   pointer-events: none;
   
   // Propriedades da máscara e animação
-  mask-image: url(./fundo.svg);
+  mask-image: url(./assets/fundo.svg);
   mask-size: 70% auto;
   mask-repeat: repeat;
   background: linear-gradient(
