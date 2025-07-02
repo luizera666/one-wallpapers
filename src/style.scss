@@ -74,7 +74,7 @@
   bottom: var(--size);
   left: var(--size);
   background: radial-gradient(
-      ellipse at calc(90% - var(--ratio-x) * 20%)
+      ellipse at calc(150% - var(--ratio-x) * 20%)
         calc(0% - var(--ratio-y) * 20%),
       rgba(255, 255, 255, 0.7),
       var(--c1) 1%,
@@ -91,13 +91,13 @@
       transparent
     );
   transition: all 0.2s linear, opacity 0.8s ease;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: overlay;
   opacity: 1;
 }
 
 .holo-lines {
   mask-image: url(./fundo.svg);
-  mask-size: contain;
+  mask-size: 70% auto;
   mask-repeat: repeat;
   position: absolute;
   inset: 0;
@@ -111,18 +111,18 @@
     rgba(255,255,255,0) 100%
   );
   background-repeat: no-repeat;
-  background-size: 50%;
-  animation: animate 10s linear infinite;
+  background-size: 80%;
+  animation: animate 8s linear infinite;
   opacity: 1;
   mix-blend-mode: overlay;
 }
 
 @keyframes animate {
   0% {
-    background-position: -200%;
+    background-position: -500%;
   }
   100% {
-    background-position: 200%;
+    background-position: 500%;
   }
 }
 
