@@ -38,6 +38,8 @@
   --brand-lighter: #4a7bc8;
   --brand-dark: #011f5a;
   --brand-darker: #001233;
+  --holo-intensity: 1;
+  --holo-speed: 1;
 }
 
 // Estilos para a cena do parallax
@@ -120,7 +122,7 @@
   
   // Propriedades da máscara e animação
   mask-image: url(./fundo.svg);
-  mask-size: 80% auto;
+  mask-size: 60% auto;
   mask-repeat: repeat;
   background: linear-gradient(
     90deg,
@@ -132,10 +134,16 @@
   );
   background-repeat: no-repeat;
   background-size: 80%;
-  animation: animate calc(8s / var(--holo-speed)) linear infinite;
-  opacity: calc(0.8 + (var(--holo-intensity) * 0.2));
+  animation: animate calc(6s / var(--holo-speed)) linear infinite;
+  opacity: calc(1 + (var(--holo-intensity) * 0.8));
   mix-blend-mode: overlay;
   will-change: transform;     // 🔥 Otimização GPU para movimento suave
+  
+  // 🌟 GLOW EFFECT - Brilho nas linhas holográficas
+  filter: 
+    drop-shadow(0 0 10px rgba(255,255,255,0.6))
+    drop-shadow(0 0 20px rgba(255,255,255,0.4))
+    drop-shadow(0 0 30px rgba(255,255,255,0.2));
 }
 
 @keyframes animate {

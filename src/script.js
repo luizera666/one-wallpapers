@@ -41,74 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	// Função para atualizar efeitos holográficos baseado no movimento
-	function updateHoloEffects() {
-		if (!logo || !holoLines) return;
-		
-		// Obtém a posição atual do logo
-		const logoRect = logo.getBoundingClientRect();
-		const sceneRect = scene.getBoundingClientRect();
-		
-		// Calcula o centro da cena
-		const centerX = sceneRect.width / 2;
-		const centerY = sceneRect.height / 2;
-		
-		// Calcula a posição relativa do logo
-		const logoCenterX = logoRect.left + logoRect.width / 2 - sceneRect.left;
-		const logoCenterY = logoRect.top + logoRect.height / 2 - sceneRect.top;
-		
-		// Calcula a distância do centro
-		const distanceX = Math.abs(logoCenterX - centerX);
-		const distanceY = Math.abs(logoCenterY - centerY);
-		const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
-		const currentDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-		
-		// Calcula intensidade baseada na distância
-		const intensity = 1 + (currentDistance / maxDistance) * 2;
-		const speed = 1 + (currentDistance / maxDistance) * 0.5;
-		
-		// Atualiza as variáveis CSS para o efeito holográfico
-		document.body.style.setProperty('--holo-intensity', intensity.toString());
-		document.body.style.setProperty('--holo-speed', speed.toString());
-		
-		// Deslocamento sutil do pattern do holo-lines
-		const sutilX = (logoCenterX - centerX) * 0.1;
-		const sutilY = (logoCenterY - centerY) * 0.1;
-		holoLines.style.maskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
-		holoLines.style.webkitMaskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
-	}
-
-	// Atualiza os efeitos quando o parallax se move
-	let animationId;
-	function animateHoloEffects() {
-		updateHoloEffects();
-		animationId = requestAnimationFrame(animateHoloEffects);
-	}
-
-	// Inicia a animação dos efeitos holográficos
-	animateHoloEffects();
-
-	// Event listeners para mouse
-	scene.addEventListener("mousemove", () => {
-		// Os efeitos são atualizados automaticamente pela animação
-	});
-
-	scene.addEventListener("mouseleave", () => {
-		// Reseta as variáveis do efeito holográfico quando o mouse sai
-		document.body.style.setProperty('--holo-intensity', '1');
-		document.body.style.setProperty('--holo-speed', '1');
-		
-		if (holoLines) {
-			holoLines.style.maskPosition = '50% 50%';
-			holoLines.style.webkitMaskPosition = '50% 50%';
-		}
-	});
-
 	// Limpeza quando a página é descarregada
 	window.addEventListener('beforeunload', () => {
-		if (animationId) {
-			cancelAnimationFrame(animationId);
-		}
 		if (parallaxInstance) {
 			parallaxInstance.destroy();
 		}
