@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log("DOM carregado!");
 	
 	const logo = document.querySelector(".logo");
+	const holoLines = document.querySelector('.holo-lines');
 	const card = document.body;
 	
 	console.log("Logo encontrada:", logo);
@@ -36,6 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Aplica o transform na logo (acumula centralização)
 		logo.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px)`;
 		
+		// Deslocamento sutil do pattern do holo-lines
+		if (holoLines) {
+			const sutilX = currentX * 0.12; // movimento ainda mais sutil
+			const sutilY = currentY * 0.12;
+			holoLines.style.maskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
+			holoLines.style.webkitMaskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
+		}
+		
 		// Continua animando se ainda há diferença
 		if (Math.abs(currentX - targetX) > 0.1 || Math.abs(currentY - targetY) > 0.1) {
 			requestAnimationFrame(animateLogo);
@@ -44,6 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			currentX = targetX;
 			currentY = targetY;
 			logo.style.transform = `translate(-50%, -50%) translate(${currentX}px, ${currentY}px)`;
+			if (holoLines) {
+				const sutilX = currentX * 0.12;
+				const sutilY = currentY * 0.12;
+				holoLines.style.maskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
+				holoLines.style.webkitMaskPosition = `${50 + sutilX}% ${50 + sutilY}%`;
+			}
 			isAnimating = false;
 		}
 	}
@@ -61,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		const mouseY = (e.clientY - rect.top - centerY) / centerY;
 		
 		// Aplica o parallax (ajuste a intensidade aqui)
-		targetX = mouseX * 50; // Aumentei para 50px para teste
-		targetY = mouseY * 30; // Aumentei para 30px para teste
+		targetX = mouseX * 22; // movimento mais sutil
+		targetY = mouseY * 12; // movimento mais sutil
 		
 		console.log("Target:", targetX, targetY);
 		
