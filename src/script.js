@@ -3,11 +3,13 @@ console.log("Script carregado! - DEV MODE");
 
 // Aguarda o DOM carregar completamente
 document.addEventListener('DOMContentLoaded', () => {
-	console.log("DOM carregado!");
-	
-	const scene = document.getElementById('scene');
-	const logo = document.querySelector(".logo");
-	const holoLines = document.querySelector('.holo-lines');
+        console.log("DOM carregado!");
+
+        const scene = document.getElementById('scene');
+        const logo = document.querySelector(".logo");
+        const menuToggle = document.getElementById('logo-menu-toggle');
+        const menu = document.getElementById('logo-menu');
+        const holoLines = document.querySelector('.holo-lines');
 	
 	console.log("Scene encontrada:", scene);
 	console.log("Logo encontrada:", logo);
@@ -48,7 +50,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 	
-	console.log("Parallax configurado!");
+        console.log("Parallax configurado!");
+
+        const logos = [
+                { nome: 'Logo padrão', file: './assets/one-branco.svg' },
+                { nome: 'Placeholder 1', file: './assets/logo-placeholder1.svg' },
+                { nome: 'Placeholder 2', file: './assets/logo-placeholder2.svg' },
+                { nome: 'Placeholder 3', file: './assets/logo-placeholder3.svg' }
+        ];
+
+        logos.forEach(({ nome, file }) => {
+                const btn = document.createElement('button');
+                btn.textContent = nome;
+                btn.className = 'logo-option';
+                btn.addEventListener('click', () => {
+                        logo.style.backgroundImage = `url(${file})`;
+                        menu.classList.remove('open');
+                });
+                menu.appendChild(btn);
+        });
+
+        if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                        menu.classList.toggle('open');
+                });
+        }
 });
 
 // --- CÓDIGO ORIGINAL COMENTADO ---

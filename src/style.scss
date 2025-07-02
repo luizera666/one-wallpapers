@@ -88,6 +88,44 @@
   /* Teste de watch - transformação removida temporariamente */
 }
 
+.logo-menu-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+.logo-menu {
+  position: absolute;
+  top: 3.5rem;
+  right: 1rem;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  display: none;
+  flex-direction: column;
+}
+
+.logo-menu.open {
+  display: flex;
+}
+
+.logo-option {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  text-align: left;
+}
+
 .holo-bg {
   border-radius: inherit;
   --size: 0;
