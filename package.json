@@ -11,16 +11,17 @@
     "watch:pug": "pug src/index.pug -o dist --watch",
     "watch:scss": "npx sass src/style.scss dist/style.css --watch",
     "watch:assets": "copyfiles -u 1 src/*.svg dist/ --watch & copyfiles -u 1 src/*.js dist/ --watch",
-    "dev": "npm run build && npm run watch",
+    "dev": "npm run build && concurrently \"npm run watch:pug\" \"npm run watch:scss\" \"npm run watch:assets\" \"npx http-server dist -p 8080 -o\"",
     "serve": "npx http-server dist -p 3000 -o",
     "start": "npm run build && npm run watch & npm run serve",
     "live-preview": "npm run build",
     "build-and-serve": "npm run build && npm run serve"
   },
   "devDependencies": {
-    "pug-cli": "^1.0.0-alpha6",
-    "sass": "^1.69.0",
+    "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
     "http-server": "^14.1.1",
-    "copyfiles": "^2.4.1"
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.69.0"
   }
-} 
+}
