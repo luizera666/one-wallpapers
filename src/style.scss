@@ -41,15 +41,15 @@
 }
 
 // Estilos para a cena do parallax
-.parallax-scene {
+#scene.parallax-scene {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  position: relative;
   overflow: hidden;
 }
 
 // Elementos do parallax
-.parallax-scene > * {
+#scene.parallax-scene > * {
   position: absolute;
   top: 0;
   left: 0;
@@ -57,67 +57,49 @@
   height: 100%;
 }
 
-.card {
+
+.holo-lines {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  transform-style: preserve-3d;
+  left: 50%;
+  top: 50%;
+  width: 200vw;
+  height: 200vh;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
 .logo {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80vw;
-  height: 80vw;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(-50%, -50%);
-  transition: box-shadow 0.1s;
+  pointer-events: auto;
+  background-size: 50% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(./one-branco.svg);
   z-index: 2;
-  color: white;
-  font-weight: bold;
-  font-size: 7cqw;
-
-  &:after {
-    position: absolute;
-    content: "";
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: grid;
-    place-items: center;
-    background-image: url(./one-branco.svg);
-    background-size: 50% auto;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform-style: preserve-3d;
-    transition: all .2s linear;
-    /*
-    transform: perspective(100px)
-      translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
-      translate(
-        calc(0rem + var(--ratio-x) * -1rem),
-        calc(0rem + var(--ratio-y) * -1rem)
-      );
-    */
-  }
+  transform: perspective(100px)
+    translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
+    translate(
+      calc(0rem + var(--ratio-x) * -1rem),
+      calc(0rem + var(--ratio-y) * -1rem)
+    );
 }
 
+
 .holo-bg {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 120vw;
-  height: 120vh;
-  transform: translate(-50%, -50%);
   border-radius: inherit;
   --size: 0;
+  width: 200vw;
+  height: 200vh;
   background: 
     linear-gradient(
       110deg,
@@ -167,6 +149,9 @@
 }
 
 html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   width: 100vw;
   height: 100vh;
   min-width: 100vw;
