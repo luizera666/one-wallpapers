@@ -28,6 +28,12 @@
   initial-value: 1;
 }
 
+@property --glow-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
 :root {
   --labs-sys-color-surface: #444;
   --labs-sys-color-on-surface: hsl(0, 100%, 0%);
@@ -40,6 +46,7 @@
   --brand-darker: #001233;
   --holo-intensity: 1;
   --holo-speed: 1;
+  --glow-intensity: 1;
 }
 
 // Estilos para a cena do parallax
@@ -111,8 +118,7 @@
 .holo-lines {
   // 🔥 UNIFICADO - Todos os estilos em um só bloco, centralizado
   position: absolute;
-  left: 50%;                  // 🔥 CENTRALIZADO - Corrige o problema das bordas
-  top: 50%;                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
+                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
   width: 200vw;               // 🔥 Tamanho grande para cobertura completa
   height: 200vh;              // 🔥 Tamanho grande para cobertura completa
   transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
@@ -122,7 +128,7 @@
   
   // Propriedades da máscara e animação
   mask-image: url(./fundo.svg);
-  mask-size: 60% auto;
+  mask-size: 70% auto;
   mask-repeat: repeat;
   background: linear-gradient(
     90deg,
@@ -134,16 +140,20 @@
   );
   background-repeat: no-repeat;
   background-size: 80%;
-  animation: animate calc(6s / var(--holo-speed)) linear infinite;
+  animation: 
+    animate calc(6s / var(--holo-speed)) linear infinite,
+    glow-pulse 3s ease-in-out infinite;
   opacity: calc(1 + (var(--holo-intensity) * 0.8));
   mix-blend-mode: overlay;
-  will-change: transform;     // 🔥 Otimização GPU para movimento suave
   
-  // 🌟 GLOW EFFECT - Brilho nas linhas holográficas
+  // 🔥 NOVO: Efeito de brilho (glow) nas linhas holográficas
   filter: 
-    drop-shadow(0 0 10px rgba(255,255,255,0.6))
-    drop-shadow(0 0 20px rgba(255,255,255,0.4))
-    drop-shadow(0 0 30px rgba(255,255,255,0.2));
+    drop-shadow(0 0 calc(20px * var(--glow-intensity)) var(--brand-lighter))
+    drop-shadow(0 0 calc(40px * var(--glow-intensity)) var(--brand-light))
+    drop-shadow(0 0 calc(60px * var(--glow-intensity)) var(--c1))
+    drop-shadow(0 0 calc(80px * var(--glow-intensity)) var(--brand-light));
+    
+  will-change: transform;     // 🔥 Otimização GPU para movimento suave
 }
 
 @keyframes animate {
@@ -152,6 +162,15 @@
   }
   100% {
     background-position: 500%;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    --glow-intensity: 1;
+  }
+  50% {
+    --glow-intensity: 1.8;
   }
 }
 
