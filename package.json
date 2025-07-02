@@ -23,5 +23,8 @@
     "http-server": "^14.1.1",
     "pug-cli": "^1.0.0-alpha6",
     "sass": "^1.69.0"
+  },
+  "dependencies": {
+    "parallax-js": "^3.1.0"
   }
 }

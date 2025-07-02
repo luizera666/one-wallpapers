@@ -8,11 +8,13 @@ html(lang="en")
     link(rel="stylesheet" href="./style.css")
   
   body
-    .card.rotate
-      .holo-bg
-      .holo-lines
-      .logo
+    #scene.parallax-scene
+      .card.rotate(data-depth="0.1")
+        .holo-bg(data-depth="0.3")
+        .holo-lines(data-depth="0.2")
+        .logo(data-depth="0.4")
     
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js")
     script(src="https://codepen.io/konstantindenerz/pen/KKxvdPq.js")
     script(src="./script.js")
   
