@@ -1,5 +1,5 @@
 // Parallax.js implementation
-console.log("Script carregado!");
+console.log("Script carregado! - DEV MODE");
 
 // Aguarda o DOM carregar completamente
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,19 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	const parallaxInstance = new Parallax(scene, {
 		relativeInput: true,
 		hoverOnly: false,
+		clipRelativeInput: true,    // 🔥 EVITA BORDAS! Limita movimento às bordas do elemento
 		calibrateX: true,
 		calibrateY: true,
 		invertX: true,
 		invertY: true,
-		limitX: false,
-		limitY: false,
-		scalarX: 3.0,
-		scalarY: 3.0,
-		frictionX: 0.1,
-		frictionY: 0.1,
-		originX: 0.5,
-		originY: 0.5,
-		precision: 1,
+		limitX: 25,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
+		limitY: 25,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
+		scalarX: 3,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
+		scalarY: 3,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
+		frictionX: 0.2,             // 🔥 AUMENTADO - Movimento mais suave
+		frictionY: 0.2,             // 🔥 AUMENTADO - Movimento mais suave
+		originX: 0.5,               // Centro é mais seguro para evitar gaps
+		originY: 0.5,               // Centro é mais seguro para evitar gaps
+		precision: 1,               // Menos precisão = melhor performance
 		pointerEvents: false,
 		onReady: function() {
 			console.log("Parallax inicializado com sucesso!");
@@ -66,6 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		const intensity = 1 + (currentDistance / maxDistance) * 2;
 		const speed = 1 + (currentDistance / maxDistance) * 0.5;
 		
+		// 🔥 NOVO: Atualiza o ratio-x do background baseado no movimento do logo
+		const ratioX = (logoCenterX - centerX) / centerX; // -1 a 1
+		document.body.style.setProperty('--ratio-x', ratioX.toString());
+		
 		// Atualiza as variáveis CSS para o efeito holográfico
 		document.body.style.setProperty('--holo-intensity', intensity.toString());
 		document.body.style.setProperty('--holo-speed', speed.toString());
@@ -94,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	scene.addEventListener("mouseleave", () => {
 		// Reseta as variáveis do efeito holográfico quando o mouse sai
+		document.body.style.setProperty('--ratio-x', '0');         // 🔥 NOVO: Reseta background
 		document.body.style.setProperty('--holo-intensity', '1');
 		document.body.style.setProperty('--holo-speed', '1');
 		

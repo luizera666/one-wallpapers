@@ -46,6 +46,8 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  perspective-origin: center;    // 🔥 FIX para gaps de parallax
+  transform-origin: center;      // 🔥 FIX para gaps de parallax
 }
 
 // Elementos do parallax
@@ -55,6 +57,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  transform-origin: center;      // 🔥 FIX para gaps de parallax
 }
 
 
@@ -62,13 +65,14 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 200vw;
-  height: 200vh;
+  width: 120vw;               // 🔥 REDUZIDO - Tamanho mais controlado
+  height: 120vh;              // 🔥 REDUZIDO - Tamanho mais controlado
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  transform-origin: center;   // 🔥 Centraliza transformações
 }
 
 .logo {
@@ -86,35 +90,11 @@
   background-position: center;
   background-image: url(./one-branco.svg);
   z-index: 2;
-  transform: perspective(100px)
-    translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
-    translate(
-      calc(0rem + var(--ratio-x) * -1rem),
-      calc(0rem + var(--ratio-y) * -1rem)
-    );
+  /* Teste de watch - transformação removida temporariamente */
 }
 
 
-.holo-bg {
-  border-radius: inherit;
-  --size: 0;
-  width: 200vw;
-  height: 200vh;
-  background: 
-    linear-gradient(
-      110deg,
-      var(--brand-darker) calc(10% - var(--ratio-x) * 20%),
-      var(--brand-dark) calc(20% - var(--ratio-x) * 20%),
-      var(--c1) calc(30% - var(--ratio-x) * 20%),
-      var(--brand-light) calc(60% - var(--ratio-x) * 20%),
-      var(--c1) calc(100% - var(--ratio-x) * 20%),
-      #001b4f
-    );
-  transition: all 0.2s linear, opacity 0.8s ease;
-  mix-blend-mode: screen;
-  opacity: 1;
-  z-index: 0;
-}
+// 🔥 HOLO-BG REMOVIDO! Agora é o background do body
 
 .holo-lines {
   z-index: 1;
@@ -159,12 +139,22 @@ html, body {
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
-  background: linear-gradient(110deg, #022e82 0%, #1a4ba3 100%);
+  // 🔥 HOLO-BG AGORA É O BACKGROUND DO BODY! Sem movimento, sem bordas
+  background: 
+    linear-gradient(
+      110deg,
+      var(--brand-darker) calc(15% - var(--ratio-x) * 8%),
+      var(--brand-dark) calc(25% - var(--ratio-x) * 8%),
+      var(--c1) calc(35% - var(--ratio-x) * 8%),
+      var(--brand-light) calc(65% - var(--ratio-x) * 8%),
+      var(--c1) calc(85% - var(--ratio-x) * 8%),
+      #001b4f
+    );
   color: var(--labs-sys-color-on-surface);
   --ratio-x: 1;
   --ratio-y: 0;
   transform-style: preserve-3d;
-  transition: none;
+  transition: background 0.2s linear;
   --correction: 100%;
   z-index: 0;
 }
