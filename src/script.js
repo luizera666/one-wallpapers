@@ -1,5 +1,5 @@
 // Parallax.js implementation
-console.log("Script carregado!");
+console.log("Script carregado! - DEV MODE");
 
 // Aguarda o DOM carregar completamente
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,12 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		calibrateY: true,
 		invertX: true,
 		invertY: true,
-		limitX: false,
-		limitY: false,
-		scalarX: 3.0,
-		scalarY: 3.0,
-		frictionX: 0.1,
-		frictionY: 0.1,
+		limitX: true,
+		limitY: true,
+		scalarX: 5,
+		scalarY: 2,
+		frictionX: 0.5,
+		frictionY: 0.5,
 		originX: 0.5,
 		originY: 0.5,
 		precision: 1,

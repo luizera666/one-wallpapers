@@ -86,12 +86,7 @@
   background-position: center;
   background-image: url(./one-branco.svg);
   z-index: 2;
-  transform: perspective(100px)
-    translateZ(calc(0.01rem + 0.5rem * var(--ratio-x)))
-    translate(
-      calc(0rem + var(--ratio-x) * -1rem),
-      calc(0rem + var(--ratio-y) * -1rem)
-    );
+  /* Teste de watch - transformação removida temporariamente */
 }
 
 
