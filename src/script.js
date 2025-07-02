@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		calibrateY: true,
 		invertX: true,
 		invertY: true,
-		limitX: 25,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
-		limitY: 25,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
-		scalarX: 3,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
-		scalarY: 3,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
+		limitX: false,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
+		limitY: false,                 // 🔥 REDUZIDO - Movimento mais restrito para evitar gaps
+		scalarX: 2,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
+		scalarY: 2,                 // 🔥 REDUZIDO - Menos intensidade = menos chance de gaps
 		frictionX: 0.2,             // 🔥 AUMENTADO - Movimento mais suave
 		frictionY: 0.2,             // 🔥 AUMENTADO - Movimento mais suave
 		originX: 0.5,               // Centro é mais seguro para evitar gaps
@@ -67,10 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		const intensity = 1 + (currentDistance / maxDistance) * 2;
 		const speed = 1 + (currentDistance / maxDistance) * 0.5;
 		
-		// 🔥 NOVO: Atualiza o ratio-x do background baseado no movimento do logo
-		const ratioX = (logoCenterX - centerX) / centerX; // -1 a 1
-		document.body.style.setProperty('--ratio-x', ratioX.toString());
-		
 		// Atualiza as variáveis CSS para o efeito holográfico
 		document.body.style.setProperty('--holo-intensity', intensity.toString());
 		document.body.style.setProperty('--holo-speed', speed.toString());
@@ -99,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	scene.addEventListener("mouseleave", () => {
 		// Reseta as variáveis do efeito holográfico quando o mouse sai
-		document.body.style.setProperty('--ratio-x', '0');         // 🔥 NOVO: Reseta background
 		document.body.style.setProperty('--holo-intensity', '1');
 		document.body.style.setProperty('--holo-speed', '1');
 		

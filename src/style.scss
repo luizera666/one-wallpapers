@@ -65,14 +65,13 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 120vw;               // 🔥 REDUZIDO - Tamanho mais controlado
-  height: 120vh;              // 🔥 REDUZIDO - Tamanho mais controlado
+  width: 200vw;
+  height: 200vh;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  transform-origin: center;   // 🔥 Centraliza transformações
 }
 
 .logo {
@@ -94,7 +93,31 @@
 }
 
 
-// 🔥 HOLO-BG REMOVIDO! Agora é o background do body
+.holo-bg {
+  border-radius: inherit;
+  --size: 0;
+  position: absolute;
+  width: 400vw;               // 🔥 AINDA MAIOR para eliminar gaps definitivamente
+  height: 400vh;              // 🔥 AINDA MAIOR para eliminar gaps definitivamente  
+  left: -150vw;               // 🔥 Centraliza o elemento extra-extra-grande
+  top: -150vh;                // 🔥 Centraliza o elemento extra-extra-grande
+  transform-origin: center;   // 🔥 FIX específico para este elemento
+  background: 
+    linear-gradient(
+      110deg,
+      var(--brand-darker) calc(15% - var(--ratio-x) * 8%),     // 🔥 Reduzido ainda mais para compensar
+      var(--brand-dark) calc(25% - var(--ratio-x) * 8%),       // 🔥 Reduzido ainda mais para compensar
+      var(--c1) calc(35% - var(--ratio-x) * 8%),               // 🔥 Reduzido ainda mais para compensar
+      var(--brand-light) calc(65% - var(--ratio-x) * 8%),      // 🔥 Reduzido ainda mais para compensar
+      var(--c1) calc(85% - var(--ratio-x) * 8%),               // 🔥 Reduzido ainda mais para compensar
+      #001b4f
+    );
+  transition: all 0.2s linear, opacity 0.8s ease;
+  mix-blend-mode: screen;
+  opacity: 1;
+  z-index: 0;
+  will-change: transform;     // 🔥 Otimização GPU para movimento suave
+}
 
 .holo-lines {
   z-index: 1;
@@ -139,24 +162,27 @@ html, body {
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
-  // 🔥 HOLO-BG AGORA É O BACKGROUND DO BODY! Sem movimento, sem bordas
-  background: 
-    linear-gradient(
-      110deg,
-      var(--brand-darker) calc(15% - var(--ratio-x) * 8%),
-      var(--brand-dark) calc(25% - var(--ratio-x) * 8%),
-      var(--c1) calc(35% - var(--ratio-x) * 8%),
-      var(--brand-light) calc(65% - var(--ratio-x) * 8%),
-      var(--c1) calc(85% - var(--ratio-x) * 8%),
-      #001b4f
-    );
+  background: linear-gradient(110deg, #022e82 0%, #1a4ba3 100%);
   color: var(--labs-sys-color-on-surface);
   --ratio-x: 1;
   --ratio-y: 0;
   transform-style: preserve-3d;
-  transition: background 0.2s linear;
+  transition: none;
   --correction: 100%;
   z-index: 0;
+}
+
+// 🔥 FIX ADICIONAL: Garante que não haja gaps em nenhuma situação
+body::before {
+  content: '';
+  position: fixed;
+  top: -50vh;
+  left: -50vw;
+  width: 200vw;
+  height: 200vh;
+  background: linear-gradient(110deg, #022e82 0%, #1a4ba3 100%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 body.rotate {
