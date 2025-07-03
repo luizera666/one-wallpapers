@@ -10,13 +10,19 @@ html(lang="en")
   body
     #scene.parallax-scene
       .holo-bg(data-depth="0.1")
-      .holo-lines(data-depth="0.3")
+      //- .holo-lines(data-depth="0.3") - Temporariamente desabilitado (usando Pixi.js agora)
       .logo(data-depth="0.6")
 
     button#logo-menu-toggle.logo-menu-toggle 🖼️
     #logo-menu.logo-menu
 
+    //- Pixi.js v7 (versão estável)
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.2/pixi.min.js")
+    
+    //- Parallax original
     script(src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js")
 
+    //- Scripts do projeto
     script(src="./script.js")
+    script(src="./pixiShining.js")
   

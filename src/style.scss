@@ -160,88 +160,47 @@
   will-change: transform;     // 🔥 Otimização GPU para movimento suave
 }
 
+/* 
+🔥 CSS TEMPORARIAMENTE DESABILITADO - USANDO PIXI.JS AGORA
+Para voltar ao CSS, descomente esta seção e comente o pixiShining.js
+
 .holo-lines {
-  // 🔥 UNIFICADO - Todos os estilos em um só bloco, centralizado
   position: absolute;
-  left: 50%;                  // 🔥 CENTRALIZADO - Corrige o problema das bordas
-  top: 50%;                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
-  width: 200vw;               // 🔥 Tamanho grande para cobertura completa
-  height: 200vh;              // 🔥 Tamanho grande para cobertura completa
-  transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
-  transform-origin: center;   // 🔥 FIX específico para este elemento
+  left: 50%;
+  top: 50%;
+  width: 200vw;
+  height: 200vh;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
   z-index: 1;
   pointer-events: none;
-  
-  // Propriedades da máscara
+
   mask-image: url(./assets/fundo.svg);
   mask-size: 70% auto;
   mask-repeat: repeat;
-  
-  // 🌟 OPÇÃO 1: SPOT LUMINOSO COM GLOW INTENSO (ATIVA)
-  background: 
-    radial-gradient(
-      ellipse calc(150px * var(--glow-intensity)) calc(300px * var(--glow-intensity)) at var(--spot-x, 0%) 50%,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.7) 20%,
-      rgba(255, 255, 255, 0.3) 40%,
-      rgba(255, 255, 255, 0.1) 60%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  
-  /* // 🌟 OPÇÃO 2: LASER VERTICAL MOVENDO
-  background: 
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0) calc(var(--spot-x, 0%) - 3%),
-      rgba(255,255,255,0.8) calc(var(--spot-x, 0%) - 1%),
-      rgba(255,255,255,1) var(--spot-x, 0%),
-      rgba(255,255,255,0.8) calc(var(--spot-x, 0%) + 1%),
-      rgba(255,255,255,0) calc(var(--spot-x, 0%) + 3%),
-      rgba(255,255,255,0) 100%
-    );
-  */
-  
-  /* // 🌟 OPÇÃO 3: MÚLTIPLOS PONTOS DE LUZ
-  background: 
-    radial-gradient(
-      circle calc(80px * var(--glow-intensity)) at calc(var(--spot-x, 0%) - 20%) 30%,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    radial-gradient(
-      circle calc(120px * var(--glow-intensity)) at var(--spot-x, 0%) 50%,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    radial-gradient(
-      circle calc(60px * var(--glow-intensity)) at calc(var(--spot-x, 0%) + 15%) 70%,
-      rgba(255, 255, 255, 0.5) 0%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  */
-  
+
+  background: radial-gradient(circle 180px at 0% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0.1) 80%, rgba(255,255,255,0) 100%);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  
-  // Animação do spot luminoso
-  animation: 
-    glow-sweep calc(6s / var(--holo-speed)) linear infinite,
-    glow-pulse 3s ease-in-out infinite;
-  
-  opacity: calc(0.8 + (var(--holo-intensity) * 0.6));
-  mix-blend-mode: overlay;
-  
-  // 🔥 GLOW EFFECT: Efeito de brilho intenso
-  filter: 
-    blur(calc(2px * var(--glow-intensity)))
-    drop-shadow(0 0 calc(30px * var(--glow-intensity)) rgba(255, 255, 255, 0.8))
-    drop-shadow(0 0 calc(60px * var(--glow-intensity)) var(--brand-lighter))
-    drop-shadow(0 0 calc(90px * var(--glow-intensity)) var(--brand-light))
-    drop-shadow(0 0 calc(120px * var(--glow-intensity)) var(--c1));
-    
-  will-change: transform;     // 🔥 Otimização GPU para movimento suave
+  background-position: 0% 50%;
+  filter: blur(48px) brightness(2.2);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+  will-change: background-position, filter, opacity;
+  animation: holo-glow-move 4s linear infinite;
 }
+*/
+
+/*
+@keyframes holo-glow-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+*/
 
 // 🌟 NOVA ANIMAÇÃO: Movimento do spot luminoso
 @keyframes glow-sweep {
