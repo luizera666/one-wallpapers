@@ -5,18 +5,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     await new Promise(resolve => setTimeout(resolve, 100));
   }
 
-  class ShiningEffect {
+  class HoloShiningEffect {
     constructor() {
       this.app = null;
-      this.container = null;
-      this.maskSprite = null;
-      this.shiningGraphics = null;
+      this.svgSprite = null;
+      this.shiningOverlay = null;
       this.init();
     }
 
     async init() {
       try {
-        console.log('🚀 Iniciando Pixi.js...');
+        console.log('🚀 Iniciando Holo Shining Effect...');
         
         // Criar aplicação Pixi v7
         this.app = new PIXI.Application({
@@ -30,16 +29,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Aguardar app estar pronto
         await new Promise(resolve => setTimeout(resolve, 100));
 
-        // Criar container para o Pixi
+        // Criar container para o Pixi sobreposto ao CSS
         const pixiContainer = document.createElement('div');
-        pixiContainer.id = 'pixi-shining';
+        pixiContainer.id = 'pixi-holo-effect';
         pixiContainer.style.cssText = `
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          z-index: 1;
+          z-index: 2;
           pointer-events: none;
         `;
         document.body.appendChild(pixiContainer);
@@ -47,18 +46,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Adicionar canvas
         pixiContainer.appendChild(this.app.view);
 
-        // Container principal
-        this.container = new PIXI.Container();
-        this.app.stage.addChild(this.container);
+        console.log('🎯 Carregando SVG...');
 
-        // Criar máscara simples primeiro (fallback)
-        this.createSimpleMask();
+        // Carregar SVG original como sprite
+        await this.loadSVGSprite();
         
-        // 🌟 ESCOLHA O EFEITO AQUI:
-        // Descomente apenas UMA das opções abaixo:
-        
-        this.createBeamEffect();        // ⚡ OPÇÃO 1: FEIXE (linha vertical) - ATIVA
-        // this.createSpotEffect();      // 🔵 OPÇÃO 2: SPOT (círculo)
+        // Criar overlay de brilho animado
+        this.createShiningOverlay();
+
+        // Aplicar BloomFilter
+        this.applyBloomFilter();
 
         // Iniciar animação
         this.startAnimation();
@@ -66,165 +63,106 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Redimensionar quando a janela mudar
         window.addEventListener('resize', () => this.resize());
         
-        console.log('✅ Pixi.js Shining Effect carregado com sucesso!');
-        
-        // Tentar carregar SVG depois (opcional)
-        this.loadSVGMask();
+        console.log('✅ Holo Shining Effect carregado com sucesso!');
         
       } catch (error) {
-        console.error('❌ Erro ao inicializar Pixi.js:', error);
+        console.error('❌ Erro ao inicializar Holo Shining Effect:', error);
       }
     }
 
-    createSimpleMask() {
-      // Criar uma máscara simples de linhas horizontais
-      const graphics = new PIXI.Graphics();
-      graphics.beginFill(0xFFFFFF);
-      
-      // Criar padrão de linhas que simula o SVG
-      const lineHeight = 8;
-      const spacing = 20;
-      
-      for (let y = 0; y < this.app.screen.height + spacing; y += spacing) {
-        graphics.drawRect(0, y, this.app.screen.width, lineHeight);
-      }
-      
-      graphics.endFill();
-      
-      this.maskSprite = graphics;
-      this.container.addChild(this.maskSprite);
-      console.log('✅ Máscara simples criada');
-    }
-
-    async loadSVGMask() {
+    async loadSVGSprite() {
       try {
-        // Tentar carregar o SVG real (opcional)
-        const response = await fetch('./assets/fundo.svg');
-        if (response.ok) {
-          const svgText = await response.text();
-          
-          // Criar versão branca do SVG
-          const maskSvgText = svgText.replace(/fill="[^"]*"/g, 'fill="white"')
-                                    .replace(/stroke="[^"]*"/g, 'stroke="white"');
-          
-          const svgBlob = new Blob([maskSvgText], { type: 'image/svg+xml' });
-          const svgUrl = URL.createObjectURL(svgBlob);
-          
-          const texture = await PIXI.Texture.fromURL(svgUrl);
-          const newMaskSprite = new PIXI.Sprite(texture);
-          
-          // Configurar nova máscara
-          newMaskSprite.anchor.set(0.5);
-          newMaskSprite.x = this.app.screen.width / 2;
-          newMaskSprite.y = this.app.screen.height / 2;
-          
-          const scaleX = this.app.screen.width / texture.width;
-          const scaleY = this.app.screen.height / texture.height;
-          newMaskSprite.scale.set(Math.max(scaleX, scaleY) * 1.5);
-          
-          // Substituir máscara antiga
-          this.container.removeChild(this.maskSprite);
-          this.maskSprite = newMaskSprite;
-          this.container.addChild(this.maskSprite);
-          
-          // Reaplicar máscara ao efeito
-          if (this.shiningGraphics) {
-            this.shiningGraphics.mask = this.maskSprite;
-          }
-          
-          URL.revokeObjectURL(svgUrl);
-          console.log('✅ SVG carregado e aplicado!');
-        }
+        console.log('📄 Carregando SVG original...');
+        
+        // Carregar o SVG original (sem modificações)
+        const texture = await PIXI.Texture.fromURL('./assets/fundo.svg');
+        console.log('📄 SVG carregado:', texture.width, 'x', texture.height);
+        
+        this.svgSprite = new PIXI.Sprite(texture);
+        
+        // Centralizar e escalar
+        this.svgSprite.anchor.set(0.5);
+        this.svgSprite.x = this.app.screen.width / 2;
+        this.svgSprite.y = this.app.screen.height / 2;
+        
+        // Escalar para ficar bem visível
+        const scaleX = this.app.screen.width / texture.width;
+        const scaleY = this.app.screen.height / texture.height;
+        const scale = Math.min(scaleX, scaleY) * 0.8; // 80% da tela
+        this.svgSprite.scale.set(scale);
+        
+        this.app.stage.addChild(this.svgSprite);
+        
+        console.log('✅ SVG Sprite criado e posicionado');
+        console.log('📋 Detalhes do sprite:');
+        console.log('  - Posição:', this.svgSprite.x, 'x', this.svgSprite.y);
+        console.log('  - Escala:', this.svgSprite.scale.x);
+        
+        return true;
       } catch (error) {
-        console.log('⚠️ SVG não pôde ser carregado, usando máscara simples');
+        console.error('❌ Erro ao carregar SVG:', error);
+        return false;
       }
     }
 
-    // ⚡ OPÇÃO 1: EFEITO FEIXE (linha vertical com glow)
-    createBeamEffect() {
-      this.shiningGraphics = new PIXI.Graphics();
+    createShiningOverlay() {
+      console.log('✨ Criando overlay de brilho...');
       
-      // Criar feixe vertical branco
-      this.shiningGraphics.beginFill(0xFFFFFF, 0.9);
-      this.shiningGraphics.drawRect(-30, 0, 60, this.app.screen.height);
-      this.shiningGraphics.endFill();
+      // Criar um gradiente brilhante que se move
+      this.shiningOverlay = new PIXI.Graphics();
       
-      // Adicionar apenas GlowFilter (sem BlurFilter depreciado)
-      try {
-        const filters = [];
-        
-        if (PIXI.filters && PIXI.filters.GlowFilter) {
-          const glowFilter = new PIXI.filters.GlowFilter({
-            distance: 50,
-            outerStrength: 4,
-            innerStrength: 2,
-            color: 0xFFFFFF,
-            quality: 0.6
-          });
-          filters.push(glowFilter);
-        }
-        
-        if (filters.length > 0) {
-          this.shiningGraphics.filters = filters;
-        }
-      } catch (e) {
-        console.warn('⚠️ Filters não disponíveis, usando efeito básico');
-      }
+      // Gradiente vertical que simula o feixe de luz
+      const gradient = new PIXI.Graphics();
+      gradient.beginFill(0xFFFFFF, 1);
+      gradient.drawRect(-50, -this.app.screen.height, 100, this.app.screen.height * 2);
+      gradient.endFill();
       
       // Posicionar fora da tela (esquerda)
-      this.shiningGraphics.x = -100;
-      this.shiningGraphics.y = 0;
+      gradient.x = -200;
+      gradient.y = 0;
       
-      // Aplicar máscara
-      this.shiningGraphics.mask = this.maskSprite;
+      this.shiningOverlay.addChild(gradient);
       
-      this.container.addChild(this.shiningGraphics);
-      console.log('✅ Efeito FEIXE criado');
+      // Aplicar máscara usando o próprio SVG sprite
+      if (this.svgSprite) {
+        this.shiningOverlay.mask = this.svgSprite;
+        console.log('✅ Máscara aplicada: overlay usará formato do SVG');
+      }
+      
+      this.app.stage.addChild(this.shiningOverlay);
+      
+      console.log('✅ Overlay de brilho criado');
     }
 
-    // 🔵 OPÇÃO 2: EFEITO SPOT (círculo com glow)
-    createSpotEffect() {
-      this.shiningGraphics = new PIXI.Graphics();
+    applyBloomFilter() {
+      console.log('🌟 Aplicando BloomFilter...');
       
-      // Criar spot circular branco
-      this.shiningGraphics.beginFill(0xFFFFFF, 0.8);
-      this.shiningGraphics.drawCircle(0, 0, 100);
-      this.shiningGraphics.endFill();
-      
-      // Adicionar apenas GlowFilter (sem BlurFilter depreciado)
       try {
-        const filters = [];
-        
-        if (PIXI.filters && PIXI.filters.GlowFilter) {
-          const glowFilter = new PIXI.filters.GlowFilter({
-            distance: 80,
-            outerStrength: 5,
-            innerStrength: 3,
-            color: 0xFFFFFF,
-            quality: 0.7
+        // Verificar se BloomFilter está disponível
+        if (PIXI.filters && PIXI.filters.BloomFilter) {
+          const bloomFilter = new PIXI.filters.BloomFilter({
+            strength: 3,      // Intensidade do bloom
+            blur: 8,          // Desfoque do bloom  
+            quality: 0.8,     // Qualidade do efeito
+            resolution: 1     // Resolução do filtro
           });
-          filters.push(glowFilter);
+          
+          // Aplicar filtro ao SVG sprite
+          this.svgSprite.filters = [bloomFilter];
+          console.log('✅ BloomFilter aplicado ao SVG sprite');
+          
+        } else {
+          console.warn('⚠️ BloomFilter não disponível, usando apenas overlay');
         }
         
-        if (filters.length > 0) {
-          this.shiningGraphics.filters = filters;
-        }
-      } catch (e) {
-        console.warn('⚠️ Filters não disponíveis, usando efeito básico');
+      } catch (error) {
+        console.error('❌ Erro ao aplicar BloomFilter:', error);
       }
-      
-      // Posicionar fora da tela (esquerda)
-      this.shiningGraphics.x = -150;
-      this.shiningGraphics.y = this.app.screen.height / 2;
-      
-      // Aplicar máscara
-      this.shiningGraphics.mask = this.maskSprite;
-      
-      this.container.addChild(this.shiningGraphics);
-      console.log('✅ Efeito SPOT criado');
     }
 
     startAnimation() {
+      console.log('🎬 Iniciando animação...');
+      
       const duration = 4000; // 4 segundos
       let startTime = Date.now();
       
@@ -232,32 +170,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         const elapsed = Date.now() - startTime;
         const progress = (elapsed % duration) / duration;
         
-        if (this.shiningGraphics) {
-          // Mover da esquerda para direita
-          const startX = -200;
-          const endX = this.app.screen.width + 200;
-          this.shiningGraphics.x = startX + (endX - startX) * progress;
+        if (this.shiningOverlay && this.shiningOverlay.children.length > 0) {
+          const gradient = this.shiningOverlay.children[0];
+          
+          // Mover gradiente da esquerda para direita
+          const startX = -300;
+          const endX = this.app.screen.width + 300;
+          gradient.x = startX + (endX - startX) * progress;
+          
+          // Variar opacidade para efeito mais suave
+          gradient.alpha = 0.3 + 0.4 * Math.sin(progress * Math.PI);
+          
+          // Debug: mostrar progresso
+          if (Math.floor(elapsed / 1000) !== this.lastLogSecond) {
+            this.lastLogSecond = Math.floor(elapsed / 1000);
+            console.log('🎬 Progresso:', Math.round(progress * 100) + '%', 'Alpha:', gradient.alpha.toFixed(2));
+          }
         }
         
         requestAnimationFrame(animate);
       };
       
       animate();
-      console.log('✅ Animação iniciada - feixe se movendo!');
+      console.log('✅ Animação iniciada!');
     }
 
     resize() {
       if (this.app && this.app.renderer) {
         this.app.renderer.resize(window.innerWidth, window.innerHeight);
         
-        if (this.maskSprite) {
-          this.maskSprite.x = this.app.screen.width / 2;
-          this.maskSprite.y = this.app.screen.height / 2;
+        if (this.svgSprite) {
+          this.svgSprite.x = this.app.screen.width / 2;
+          this.svgSprite.y = this.app.screen.height / 2;
           
-          if (this.maskSprite.texture) {
-            const scaleX = this.app.screen.width / this.maskSprite.texture.width;
-            const scaleY = this.app.screen.height / this.maskSprite.texture.height;
-            this.maskSprite.scale.set(Math.max(scaleX, scaleY) * 1.5);
+          if (this.svgSprite.texture) {
+            const scaleX = this.app.screen.width / this.svgSprite.texture.width;
+            const scaleY = this.app.screen.height / this.svgSprite.texture.height;
+            this.svgSprite.scale.set(Math.min(scaleX, scaleY) * 0.8);
           }
         }
       }
@@ -271,36 +220,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Criar efeito
-  console.log('🎯 Iniciando ShiningEffect...');
-  new ShiningEffect();
+  console.log('🎯 Iniciando HoloShiningEffect...');
+  new HoloShiningEffect();
 });
 
 /*
-🌟 INSTRUÇÕES PARA TROCAR O EFEITO:
-══════════════════════════════════════
+🌟 NOVA ABORDAGEM: HOLO SHINING EFFECT
+════════════════════════════════════════
 
-OPÇÃO 1 (ATIVA): FEIXE VERTICAL ⚡
-- Linha vertical que se move horizontalmente
-- Mais visível e dramático
-- Funciona mesmo sem glow filters
+Esta implementação combina:
+✅ PixiJS para renderizar o SVG como sprite
+✅ BloomFilter para efeito de brilho real
+✅ Gradiente animado que se move pela máscara do SVG
+✅ Animação suave com variação de opacidade
 
-OPÇÃO 2: SPOT CIRCULAR 🔵  
-- Círculo brilhante que se move horizontalmente
-- Mais suave e orgânico
-- Funciona mesmo sem glow filters
-
-Para trocar:
-1. Localize a seção "ESCOLHA O EFEITO AQUI" (linha ~60)
-2. Comente a opção ativa (adicione // no início)
-3. Descomente a opção desejada (remova // do início)
-4. Salve o arquivo e atualize a página
-
-O efeito funciona em duas etapas:
-1. Primeiro cria uma máscara simples (linhas horizontais)
-2. Depois tenta carregar o SVG real se disponível
+Vantagens:
+- SVG carregado nativamente pelo PixiJS
+- BloomFilter muito mais poderoso que CSS
+- Máscara funciona perfeitamente
+- Performance otimizada
+- Efeito muito mais realista
 
 Parâmetros ajustáveis:
-- duration: velocidade da animação (linha ~205)
-- Tamanho do feixe: drawRect(-30, 0, 60, ...) - largura = 60px
-- Tamanho do spot: drawCircle(0, 0, 100) - raio = 100px
+- BloomFilter strength: intensidade do brilho
+- BloomFilter blur: desfoque do efeito
+- Animação duration: velocidade do movimento
+- Gradiente width: largura do feixe de luz
+- Alpha variation: variação da opacidade
 */ 
