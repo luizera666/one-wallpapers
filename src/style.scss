@@ -34,6 +34,12 @@
   initial-value: 1;
 }
 
+@property --spot-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
 :root {
   --labs-sys-color-surface: #444;
   --labs-sys-color-on-surface: hsl(0, 100%, 0%);
@@ -47,6 +53,7 @@
   --holo-intensity: 1;
   --holo-speed: 1;
   --glow-intensity: 1;
+  --spot-x: 0%;
 }
 
 // Estilos para a cena do parallax
@@ -156,7 +163,8 @@
 .holo-lines {
   // 🔥 UNIFICADO - Todos os estilos em um só bloco, centralizado
   position: absolute;
-                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  left: 50%;                  // 🔥 CENTRALIZADO - Corrige o problema das bordas
+  top: 50%;                   // 🔥 CENTRALIZADO - Corrige o problema das bordas
   width: 200vw;               // 🔥 Tamanho grande para cobertura completa
   height: 200vh;              // 🔥 Tamanho grande para cobertura completa
   transform: translate(-50%, -50%); // 🔥 CENTRALIZADO - Corrige o problema das bordas
@@ -164,42 +172,84 @@
   z-index: 1;
   pointer-events: none;
   
-  // Propriedades da máscara e animação
+  // Propriedades da máscara
   mask-image: url(./assets/fundo.svg);
   mask-size: 70% auto;
   mask-repeat: repeat;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0) 0%,
-    #ffffff calc(45% + (var(--holo-intensity) * 20%)),
-    #ffffff 50%,
-    #ffffff calc(55% - (var(--holo-intensity) * 20%)),
-    rgba(255,255,255,0) 100%
-  );
+  
+  // 🌟 OPÇÃO 1: SPOT LUMINOSO COM GLOW INTENSO (ATIVA)
+  background: 
+    radial-gradient(
+      ellipse calc(150px * var(--glow-intensity)) calc(300px * var(--glow-intensity)) at var(--spot-x, 0%) 50%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.7) 20%,
+      rgba(255, 255, 255, 0.3) 40%,
+      rgba(255, 255, 255, 0.1) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  
+  /* // 🌟 OPÇÃO 2: LASER VERTICAL MOVENDO
+  background: 
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0) calc(var(--spot-x, 0%) - 3%),
+      rgba(255,255,255,0.8) calc(var(--spot-x, 0%) - 1%),
+      rgba(255,255,255,1) var(--spot-x, 0%),
+      rgba(255,255,255,0.8) calc(var(--spot-x, 0%) + 1%),
+      rgba(255,255,255,0) calc(var(--spot-x, 0%) + 3%),
+      rgba(255,255,255,0) 100%
+    );
+  */
+  
+  /* // 🌟 OPÇÃO 3: MÚLTIPLOS PONTOS DE LUZ
+  background: 
+    radial-gradient(
+      circle calc(80px * var(--glow-intensity)) at calc(var(--spot-x, 0%) - 20%) 30%,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      circle calc(120px * var(--glow-intensity)) at var(--spot-x, 0%) 50%,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    radial-gradient(
+      circle calc(60px * var(--glow-intensity)) at calc(var(--spot-x, 0%) + 15%) 70%,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  */
+  
   background-repeat: no-repeat;
-  background-size: 80%;
+  background-size: 100% 100%;
+  
+  // Animação do spot luminoso
   animation: 
-    animate calc(6s / var(--holo-speed)) linear infinite,
+    glow-sweep calc(6s / var(--holo-speed)) linear infinite,
     glow-pulse 3s ease-in-out infinite;
-  opacity: calc(1 + (var(--holo-intensity) * 0.8));
+  
+  opacity: calc(0.8 + (var(--holo-intensity) * 0.6));
   mix-blend-mode: overlay;
   
-  // 🔥 NOVO: Efeito de brilho (glow) nas linhas holográficas
+  // 🔥 GLOW EFFECT: Efeito de brilho intenso
   filter: 
-    drop-shadow(0 0 calc(20px * var(--glow-intensity)) var(--brand-lighter))
-    drop-shadow(0 0 calc(40px * var(--glow-intensity)) var(--brand-light))
-    drop-shadow(0 0 calc(60px * var(--glow-intensity)) var(--c1))
-    drop-shadow(0 0 calc(80px * var(--glow-intensity)) var(--brand-light));
+    blur(calc(2px * var(--glow-intensity)))
+    drop-shadow(0 0 calc(30px * var(--glow-intensity)) rgba(255, 255, 255, 0.8))
+    drop-shadow(0 0 calc(60px * var(--glow-intensity)) var(--brand-lighter))
+    drop-shadow(0 0 calc(90px * var(--glow-intensity)) var(--brand-light))
+    drop-shadow(0 0 calc(120px * var(--glow-intensity)) var(--c1));
     
   will-change: transform;     // 🔥 Otimização GPU para movimento suave
 }
 
-@keyframes animate {
+// 🌟 NOVA ANIMAÇÃO: Movimento do spot luminoso
+@keyframes glow-sweep {
   0% {
-    background-position: -500%;
+    --spot-x: -20%;
   }
   100% {
-    background-position: 500%;
+    --spot-x: 120%;
   }
 }
 
